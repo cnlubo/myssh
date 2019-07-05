@@ -1,0 +1,14 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Go template
+# Binaries for programs and plugins
+*.exe
+*.exe~
+
+# Test binary, build with `go test -c`
+*.test
+dist
+.idea
+template
+.DS_Store
+vendor
+go_myssh
