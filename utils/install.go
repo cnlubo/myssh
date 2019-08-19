@@ -18,13 +18,12 @@ func Install(osName string, dir string) error {
 	installDir := filepath.Join(dir, "myssh")
 	binPath := "/usr/local/bin"
 	var binPaths = []string{
-		filepath.Join(binPath, "mex"),    // exec
-		filepath.Join(binPath, "mgo"),    // go
-		filepath.Join(binPath, "msrv"),   // server
-		filepath.Join(binPath, "mcfg"),   // cfg
-		filepath.Join(binPath, "mkm"),    // km
-		filepath.Join(binPath, "myssh"),  // myssh
-		filepath.Join(binPath, "malias"), // host config
+		filepath.Join(binPath, "mcfg"),      // cfg
+		filepath.Join(binPath, "mkm"),       // km
+		filepath.Join(binPath, "malias"),    // ssh alias
+		filepath.Join(binPath, "mclusters"), // host cluster
+		filepath.Join(binPath, "myssh"),     // myssh
+
 	}
 	// 获得当前文件执行路径和名称
 	currentPath, err := exec.LookPath(os.Args[0])

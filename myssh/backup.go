@@ -33,8 +33,8 @@ func BackupAll(backupPath string, env *Environment) error {
 	if result {
 		utils.PrintN(utils.Info, fmt.Sprintf("backup [%s] successfully\n", env.StorePath))
 	}
-	// backup skm
-	destDir = filepath.Join(backupDir, "skm")
+	// backup mkm
+	destDir = filepath.Join(backupDir, "mkm")
 	result = utils.Execute(env.SKMPath, "cp", "-r", env.SKMPath+"/.", destDir)
 
 	if result {

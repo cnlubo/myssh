@@ -6,7 +6,6 @@ import (
 	"github.com/pkg/errors"
 	"os"
 	"os/exec"
-	"os/user"
 	"regexp"
 	"runtime"
 	"sort"
@@ -89,12 +88,6 @@ func ExitN(messageType string, message string, code int) {
 
 	}
 	os.Exit(code)
-}
-
-func Root() bool {
-	u, err := user.Current()
-	CheckAndExit(err)
-	return u.Uid == "0" || u.Gid == "0"
 }
 
 // Execute executes shell commands with arguments
@@ -293,7 +286,6 @@ func Clear() {
 	cmd.Stdout = os.Stdout
 	_ = cmd.Run()
 }
-
 
 // ParseConnect parse connect string, format is [user@]host[:port]
 func ParseConnect(connectStr string) (string, string, string) {

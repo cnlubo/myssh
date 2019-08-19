@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/cnlubo/myssh/myssh"
 	"github.com/cnlubo/myssh/utils"
+	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"path/filepath"
 	"runtime"
@@ -21,9 +23,15 @@ func (cc *UninstallCommand) Init(c *Cli) {
 		Use:   "uninstall",
 		Short: "uninstall myssh",
 		Long:  uninstallDescription,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) > 0 {
-				return fmt.Errorf("command 'myssh uninstall %s' does not exist.\nPlease execute `myssh uninstall --help` for more help", args[0])
+			if err := utils.ArgumentsCheck(len(args), -1, 0); err != nil {
+				myssh.Displaylogo()
+				_ = cc.Cmd().Help()
+				fmt.Println()
+				return errors.WithMessage(err, "args input failed")
 			} else {
 				return cc.runUninstall()
 			}

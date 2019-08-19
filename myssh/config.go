@@ -257,7 +257,8 @@ func CreateSSHlink(ctxName string, env *Environment) error {
 	ctxSSHCfgFile := filepath.Join(env.StorePath, "contexts", ctxName, "sshconfig")
 
 	if err, isLink = utils.IsSymLink(sshCfgFile); err != nil {
-		return err
+		// return err
+		isLink = false
 	}
 
 	if utils.PathExist(sshCfgFile) || isLink {
@@ -270,7 +271,8 @@ func CreateSSHlink(ctxName string, env *Environment) error {
 	}
 
 	if err, isLinkdir = utils.IsSymLink(filepath.Join(env.SSHPath, "include")); err != nil {
-		return err
+		// return err
+		isLinkdir = false
 	}
 
 	if utils.PathExist(filepath.Join(env.SSHPath, "include")) || isLinkdir {

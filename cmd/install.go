@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"github.com/cnlubo/myssh/myssh"
 	"github.com/cnlubo/myssh/utils"
+	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"runtime"
 )
@@ -19,9 +22,15 @@ func (cc *InstallCommand) Init(c *Cli) {
 		Use:   "install",
 		Short: "install myssh",
 		Long:  installDesc,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) > 0 {
-				return cc.Cmd().Help()
+			if err := utils.ArgumentsCheck(len(args), -1, 0); err != nil {
+				myssh.Displaylogo()
+				_ = cc.Cmd().Help()
+				fmt.Println()
+				return errors.WithMessage(err, "args input failed")
 			} else {
 				return cc.runInstall()
 			}

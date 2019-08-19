@@ -37,6 +37,53 @@ Flags:
 
 Use "myssh [command] --help" for more information about a command.
 ```
+   部分命令被重命名为快捷命令方便操作(安装后自动软连接)
+
+- myssh alias ==> malias
+- myssh cfg ==> mcfg
+- myssh km  ==> mkm
+- myssh clusters ==> mclusters
+
+
+## SSH Keys Manager
+
+```
+mkm
+Manage multiple SSH key.
+
+Usage:
+  myssh km
+  myssh km [command]
+
+Aliases:
+  km, mkm
+
+Available Commands:
+  init        Initialize SSH keys store
+  list        List all available SSH keys (alias:ls)
+  add         add one SSHKey
+  delete      delete SSH key (alias:del)
+  use         Set specific SSH key as default
+  display     Display SSHKey (alias:dp)
+  rename      Rename SSH key aliasName (alias:rn)
+  copy        Copy SSH public key to a remote host (alias:cp)
+
+Flags:
+  -h, --help   help for km
+
+Global Flags:
+      --configPath string   Path where store myssh profiles.
+                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
+      --mkmPath string      Path where myssh should store multi SSHKeys.
+                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
+      --no-color            Disable color when outputting message.
+      --sshPath string      Path to .ssh folder.
+                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+
+Use "myssh km [command] --help" for more information about a command.
+```
+
+
 
 
 

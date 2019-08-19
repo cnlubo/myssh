@@ -122,3 +122,9 @@ func Version() (SystemVersion, error) {
 		GitCommit: version.GitCommit,
 	}, nil
 }
+
+func Root() bool {
+	u, err := user.Current()
+	CheckAndExit(err)
+	return u.Uid == "0" || u.Gid == "0"
+}

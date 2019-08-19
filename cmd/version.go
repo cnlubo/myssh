@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/myssh/version"
-	"github.com/spf13/cobra"
 	"github.com/gookit/color"
+	"github.com/spf13/cobra"
 )
 
 var versionTpl = `%s
@@ -36,6 +36,9 @@ func (v *VersionCommand) Init(c *Cli) {
 		Short: "Print versions about Myssh",
 		Args:  cobra.NoArgs,
 		Long:  versionDescription,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return v.runVersion()
 		},
