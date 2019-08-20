@@ -3,7 +3,7 @@ package version
 // Version package values is auto-generated, the following values will be overwrited at build time.
 var (
 	Appname      = "MYSSH"
-	Version      = "0.0.1"
+	Version      = "1.0.0"
 	BuildTime    = "unknown"
 	GitCommit    = "unknown"
 	GitHub       = "https://github.com/cnlubo/myssh"

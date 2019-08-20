@@ -1,4 +1,4 @@
-BUILD_VERSION   := "0.0.1"
+BUILD_VERSION   := "1.0.0"
 BUILD_DATE      := $(shell date '+%Y-%m-%d %H:%M:%S')
 COMMIT_SHA1     := $(shell git rev-parse --short HEAD)
 
