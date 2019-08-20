@@ -97,7 +97,7 @@ Use "myssh km [command] --help" for more information about a command.
 
 ![mkm](https://github.com/cnlubo/myssh/blob/master/snapshots/mkm.gif)
 
-## 初始化 SSH Key Store
+### 初始化 SSH Key Store
 
 第一次运行时需要初始化 SSH Key Store
 
