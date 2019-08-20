@@ -1,14 +1,12 @@
 # myssh
 ssh 管理工具
 
-主要是将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个ssh工具的功能整合到一起方便使用，部分代码拷贝自这几个工具。
+主要是将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个工具的功能整合到一起方便使用，部分代码拷贝自这几个工具。
 
 ## usage
 
 ```
-MYSSH V0.0.1
-https://github.com/cnlubo/myssh
-
+myssh -h
 My ssh toolkit. Flags and arguments can be input to do what actually you wish.
 
 Usage:
@@ -36,8 +34,9 @@ Flags:
   -h, --help                help for myssh
 
 Use "myssh [command] --help" for more information about a command.
+
 ```
-   部分命令被重命名为快捷命令方便操作(安装后自动软连接)
+部分命令安装后自动软连接为快捷命令以便方便使用。
 
 - myssh alias ==> malias
 - myssh cfg ==> mcfg
@@ -47,8 +46,10 @@ Use "myssh [command] --help" for more information about a command.
 
 ## SSH Keys Manager
 
+Manage multiple SSH key
+
 ```
-mkm
+mkm -h
 Manage multiple SSH key.
 
 Usage:
@@ -81,7 +82,16 @@ Global Flags:
                             can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
 
 Use "myssh km [command] --help" for more information about a command.
+
 ```
+![mkm](https://github.com/cnlubo/myssh/blob/master/snapshots/mkm.gif)
+
+
+
+
+
+
+
 ## manage myssh configfile
 ```
 mcfg
