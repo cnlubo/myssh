@@ -1,12 +1,22 @@
+<!--
+ * @Author: cnak47
+ * @Date: 2019-08-20 22:17:29
+ * @LastEditors: cnak47
+ * @LastEditTime: 2019-08-20 22:45:34
+ * @Description: 
+ -->
+
 # myssh
+
 ssh 管理工具
 
 主要是将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个工具的功能整合到一起方便使用，部分代码拷贝自这几个工具。
 
-## usage
+## Usage
 
-```
+```bash
 myssh -h
+
 My ssh toolkit. Flags and arguments can be input to do what actually you wish.
 
 Usage:
@@ -36,6 +46,7 @@ Flags:
 Use "myssh [command] --help" for more information about a command.
 
 ```
+
 部分命令安装后自动软连接为快捷命令以便方便使用。
 
 - myssh alias ==> malias
@@ -43,12 +54,11 @@ Use "myssh [command] --help" for more information about a command.
 - myssh km  ==> mkm
 - myssh clusters ==> mclusters
 
-
 ## SSH Keys Manager
 
-Manage multiple SSH key
+管理 多个 SSH Keys
 
-```
+```bash
 mkm -h
 Manage multiple SSH key.
 
@@ -84,16 +94,22 @@ Global Flags:
 Use "myssh km [command] --help" for more information about a command.
 
 ```
+
 ![mkm](https://github.com/cnlubo/myssh/blob/master/snapshots/mkm.gif)
 
+## 初始化 SSH Key Store
 
+第一次运行时需要初始化 SSH Key Store
 
+```bash
+mkm init
+```
 
-
-
+所有的 SSH key 都存储在 \$HOME/.mkm目录中,如果$HOME/.ssh目录下存在 id_rsa & id_rsa.pub key pairs 将被移动到\$HOME/.mkm/default.
 
 ## manage myssh configfile
-```
+
+```bash
 mcfg
 manage myssh ConfigFile.
 
@@ -127,7 +143,7 @@ Use "myssh cfg [command] --help" for more information about a command.
 
 ## manage clusters
 
-```
+```bash
 mclusters -h
 manage clusters.
 
@@ -161,9 +177,10 @@ Global Flags:
 Use "myssh clusters [command] --help" for more information about a command.
 
 ```
+
 ## managing your ssh alias config
 
-```
+```bash
 malias -h
 command line tool for managing your ssh alias config.
 
@@ -197,9 +214,3 @@ Global Flags:
 
 Use "myssh alias [command] --help" for more information about a command.
 ```
-
-
-
-
-
-
