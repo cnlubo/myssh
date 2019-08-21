@@ -128,9 +128,9 @@ func displayConfig(cfgs myssh.Contexts, showPath bool) (tableHeader []string, hC
 			sshCfg = path.Base(cf.SSHConfig)
 		}
 		if cf.IsCurrent {
-			row = append(row, utils.CheckSymbol+cf.Name, clusterCfg,sshCfg)
+			row = append(row, utils.CheckSymbol+cf.Name, clusterCfg, sshCfg)
 		} else {
-			row = append(row, cf.Name, clusterCfg,sshCfg)
+			row = append(row, cf.Name, clusterCfg, sshCfg)
 		}
 		rowData = append(rowData, row)
 	}
@@ -271,5 +271,5 @@ func (cc *cfgSetCommand) addFlags() {
 }
 
 func (cc *cfgSetCommand) runSetConfig(args []string) error {
-	return myssh.SetContext(args[0],&cc.cli.Env)
+	return myssh.SetContext(args[0], &cc.cli.Env)
 }

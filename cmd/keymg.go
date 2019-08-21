@@ -11,7 +11,7 @@ import (
 	"sort"
 )
 
-var keyManageDesc = "Manage multiple SSH key."
+var keyManageDesc = "Manage multiple SSH keys."
 
 type KeyCommand struct {
 	baseCommand
@@ -23,7 +23,7 @@ func (cc *KeyCommand) Init(c *Cli) {
 	cc.cmd = &cobra.Command{
 		Use:     "km",
 		Aliases: []string{"mkm"},
-		Short:   "manage ssh key (alias: mkm)",
+		Short:   "manage ssh keys (alias: mkm)",
 		Long:    keyManageDesc,
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			if found := utils.PathExist(cc.cli.Env.SKMPath); !found {

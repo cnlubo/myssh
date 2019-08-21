@@ -10,9 +10,9 @@
 
 ssh 管理工具
 
-主要是将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个工具的功能整合到一起方便使用，部分代码拷贝自这几个工具。
+将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个工具的功能整合到一起以方便使用，部分代码拷贝自这几个工具。
 
-## Usage
+## 使用
 
 ```bash
 myssh -h
@@ -46,7 +46,6 @@ Flags:
 Use "myssh [command] --help" for more information about a command.
 
 ```
-
 部分命令安装后自动软连接为快捷命令以便方便使用。
 
 - myssh alias ==> malias
@@ -59,8 +58,7 @@ Use "myssh [command] --help" for more information about a command.
 管理 多个 SSH Keys
 
 ```bash
-mkm -h
-Manage multiple SSH key.
+Manage multiple SSH keys
 
 Usage:
   myssh km
@@ -107,10 +105,13 @@ mkm init
 
 所有的 SSH key 都存储在 \$HOME/.mkm目录中,如果$HOME/.ssh目录下存在 id_rsa & id_rsa.pub key pairs 将被移动到\$HOME/.mkm/default.
 
-## manage myssh configfile
+### 创建 SSH key
+Currently ONLY RSA and ED25519 keys are supported!
+
+## manage configfile
 
 ```bash
-mcfg
+mcfg -h
 manage myssh ConfigFile.
 
 Usage:
@@ -140,7 +141,7 @@ Global Flags:
 
 Use "myssh cfg [command] --help" for more information about a command.
 ```
-
+![mkm](https://github.com/cnlubo/myssh/blob/master/snapshots/mcfg.gif)
 ## manage clusters
 
 ```bash
