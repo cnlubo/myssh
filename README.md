@@ -2,7 +2,7 @@
  * @Author: cnak47
  * @Date: 2019-08-20 22:17:29
  * @LastEditors: cnak47
- * @LastEditTime: 2019-08-20 22:45:34
+ * @LastEditTime: 2019-08-21 16:19:37
  * @Description: 
  -->
 
@@ -46,6 +46,7 @@ Flags:
 Use "myssh [command] --help" for more information about a command.
 
 ```
+
 部分命令安装后自动软连接为快捷命令以便方便使用。
 
 - myssh alias ==> malias
@@ -106,9 +107,10 @@ mkm init
 所有的 SSH key 都存储在 \$HOME/.mkm目录中,如果$HOME/.ssh目录下存在 id_rsa & id_rsa.pub key pairs 将被移动到\$HOME/.mkm/default.
 
 ### 创建 SSH key
+
 Currently ONLY RSA and ED25519 keys are supported!
 
-## manage configfile
+## Manage configfile
 
 ```bash
 mcfg -h
@@ -141,7 +143,72 @@ Global Flags:
 
 Use "myssh cfg [command] --help" for more information about a command.
 ```
-![mkm](https://github.com/cnlubo/myssh/blob/master/snapshots/mcfg.gif)
+
+![mcfg](https://github.com/cnlubo/myssh/blob/master/snapshots/mcfg.gif)
+
+### 配置文件
+
+支持多配置文件切换功能,安装完成后将会自动在$HOME/.myssh下创建默认配置，默认配置文件结构如下:
+
+```bash
+tree ~/.myssh
+/Users/ak47/.myssh
+├── contexts
+│   ├── ak47
+│   │   ├── ak47.yaml
+│   │   ├── include
+│   │   └── sshconfig
+│   └── default
+│       ├── default.yaml
+│       ├── include
+│       │   └── k8s
+│       └── sshconfig
+└── main.yaml
+```
+
+#### main.yaml
+
+主配置文件结构如下:
+
+```bash
+basic: default
+contexts:
+- name: ak47
+  sshconfig: /Users/ak47/.myssh/contexts/ak47/sshconfig
+  clusterCfg: /Users/ak47/.myssh/contexts/ak47/ak47.yaml
+- name: default
+  sshconfig: /Users/ak47/.myssh/contexts/default/sshconfig
+  clusterCfg: /Users/ak47/.myssh/contexts/default/default.yaml
+current: default
+```
+
+配置文件中可以配置多个context,由current字段指明当前使用哪个context.
+
+#### sshconfig
+
+默认内容如下:
+
+```bash
+Include include/*
+```
+
+当前使用的context的 sshconfig 会被软连接到 ~/.ssh/config文件。可以使用 malias 命令 管理此配置文件。
+
+#### clusterCfg
+
+默认内容如下:
+
+```bash
+default:
+  user: ak47
+  privateKey: /Users/ak47/.ssh/id_ed25519
+  port: 22
+  server_alive_interval: 30s
+clusters: []
+```
+
+可以使用mclusters 命令来管理此配置文件。
+
 ## manage clusters
 
 ```bash
