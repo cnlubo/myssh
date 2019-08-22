@@ -154,7 +154,7 @@ func (cc *aliasDeleteCmd) runAliasDelete(args []string) error {
 	return nil
 }
 
-var addAliasDesc = "Add one ssh alias."
+var addAliasDesc = "Add a new SSH alias record."
 
 type aliasAddCmd struct {
 	baseCommand
@@ -165,7 +165,7 @@ func (cc *aliasAddCmd) Init(c *Cli) {
 	cc.cli = c
 	cc.cmd = &cobra.Command{
 		Use:   "add",
-		Short: "Add one ssh alias",
+		Short: "Add a new SSH alias record",
 		Long:  addAliasDesc,
 		RunE: func(cmd *cobra.Command, args []string) error {
 
@@ -357,9 +357,9 @@ func (cc *aliasGoCmd) runAliasGo(args []string) error {
 
 	sshConfigFile := filepath.Join(cc.cli.Env.SSHPath, "config")
 	if len(args) == 0 {
-		return myssh.AliasInteractiveLogin(sshConfigFile,cc.promptPass)
+		return myssh.AliasInteractiveLogin(sshConfigFile, cc.promptPass)
 	} else {
-		return myssh.AliasLogin(args[0],cc.promptPass, sshConfigFile)
+		return myssh.AliasLogin(args[0], cc.promptPass, sshConfigFile)
 	}
 
 }

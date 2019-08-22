@@ -206,47 +206,9 @@ default:
   server_alive_interval: 30s
 clusters: []
 ```
+文件名一般与context名称相同,可以使用mclusters 命令来管理此配置文件.
 
-可以使用mclusters 命令来管理此配置文件。
-
-## manage clusters
-
-```bash
-mclusters -h
-manage clusters.
-
-Usage:
-  myssh clusters
-  myssh clusters [command]
-
-Aliases:
-  clusters, mclusters
-
-Available Commands:
-  parse       parse hostPattern to host list (alias:pa)
-  add         Add one cluster
-  list        List all cluster (alias:ls)
-  delete      delete cluster (alias:del)
-  batch       batch exec command (alias: bt)
-  keycopy     Copy public key to cluster (alias: kcp)
-
-Flags:
-  -h, --help   help for clusters
-
-Global Flags:
-      --configPath string   Path where store myssh profiles.
-                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
-      --mkmPath string      Path where myssh should store multi SSHKeys.
-                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
-      --no-color            Disable color when outputting message.
-      --sshPath string      Path to .ssh folder.
-                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
-
-Use "myssh clusters [command] --help" for more information about a command.
-
-```
-
-## managing your ssh alias config
+## 管理 ssh alias config 文件
 
 ```bash
 malias -h
@@ -281,4 +243,71 @@ Global Flags:
                             can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
 
 Use "myssh alias [command] --help" for more information about a command.
+```
+### Add a new alias
+
+
+![malias-add](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-add.gif)
+
+## manage clusters
+
+整合了[sshbatch](https://github.com/agentzh/sshbatch)的相关功能,具体使用方法参考[sshbatch](https://github.com/agentzh/sshbatch).
+
+```bash
+mclusters -h
+manage clusters.
+
+Usage:
+  myssh clusters
+  myssh clusters [command]
+
+Aliases:
+  clusters, mclusters
+
+Available Commands:
+  parse       parse hostPattern to host list (alias:pa)
+  add         Add one cluster
+  list        List all cluster (alias:ls)
+  delete      delete cluster (alias:del)
+  batch       batch exec command (alias: bt)
+  keycopy     Copy public key to cluster (alias: kcp)
+
+Flags:
+  -h, --help   help for clusters
+
+Global Flags:
+      --configPath string   Path where store myssh profiles.
+                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
+      --mkmPath string      Path where myssh should store multi SSHKeys.
+                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
+      --no-color            Disable color when outputting message.
+      --sshPath string      Path to .ssh folder.
+                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+
+Use "myssh clusters [command] --help" for more information about a command.
+```
+### parse host pattern to host list
+
+```bash
+mclusters pa -h
+parse host pattern to host list.
+
+Usage:
+  myssh clusters parse HOST_PATTERN [flag]
+
+Aliases:
+  parse, pa
+
+Flags:
+  -e, --expand   Expand the host list output to multiple lines
+  -h, --help     help for parse
+
+Global Flags:
+      --configPath string   Path where store myssh profiles.
+                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
+      --mkmPath string      Path where myssh should store multi SSHKeys.
+                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
+      --no-color            Disable color when outputting message.
+      --sshPath string      Path to .ssh folder.
+                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
 ```
