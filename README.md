@@ -305,6 +305,33 @@ Global Flags:
 ```bash
 malias go test1
 ```
+### 批量执行命令
+
+```bash
+malias bt -h
+Batch exec command for alias.
+
+Usage:
+  myssh alias batch alias command ... [flags]
+
+Aliases:
+  batch, bt
+
+Flags:
+  -h, --help     help for batch
+  -P, --prompt   Prompt for password
+
+Global Flags:
+      --configPath string   Path where store myssh profiles.
+                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
+      --mkmPath string      Path where myssh should store multi SSHKeys.
+                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
+      --no-color            Disable color when outputting message.
+      --sshPath string      Path to .ssh folder.
+                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+```
+![malias-batch](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-batch.gif)
+
 
 ## manage clusters
 
