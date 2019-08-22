@@ -342,17 +342,6 @@ Use "myssh clusters [command] --help" for more information about a command.
 
 ```bash
 mclusters ls
-.___  ___. ____    ____      _______.     _______. __    __
-|   \/   | \   \  /   /     /       |    /       ||  |  |  |
-|  \  /  |  \   \/   /     |   (----`   |   (----`|  |__|  |
-|  |\/|  |   \_    _/       \   \        \   \    |   __   |
-|  |  |  |     |  |     .----)   |   .----)   |   |  |  |  |
-|__|  |__|     |__|     |_______/    |_______/    |__|  |__|
-
-
-MYSSH V1.0.0
-https://github.com/cnlubo/myssh
-
 
    CLUSTERNAME              HOSTPATTERN
  ---------------- --------------------------------
@@ -364,3 +353,4 @@ https://github.com/cnlubo/myssh
 
 ```
 ![mclusters](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-1.gif)
+
