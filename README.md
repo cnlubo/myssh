@@ -258,6 +258,46 @@ malias add
 
 支持模糊查询，例如:malias ls test
 
+### Delete one or more alias
+
+```bash
+malias del test test-1
+✔ deleted successfully!!!
+```
+### Update an alias
+
+```bash
+malias update test1
+```
+### login server
+
+```bash
+malias go test1
+```
+
+### Copy SSH public key to a alias Host
+
+```bash
+Copy SSH public key to alias Host
+
+Usage:
+  myssh alias keycopy alias...
+
+Aliases:
+  keycopy, kcp
+
+Flags:
+  -h, --help   help for keycopy
+
+Global Flags:
+      --configPath string   Path where store myssh profiles.
+                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
+      --mkmPath string      Path where myssh should store multi SSHKeys.
+                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
+      --no-color            Disable color when outputting message.
+      --sshPath string      Path to .ssh folder.
+                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+```
 
 ## manage clusters
 
