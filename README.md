@@ -336,28 +336,31 @@ Global Flags:
 
 Use "myssh clusters [command] --help" for more information about a command.
 ```
-### parse host pattern to host list
+### 解析 Host pattern to machine host list
+
+参考 [sshbatch](https://github.com/agentzh/sshbatch)中的fornodes脚本的使用方法，支持集合操作.
 
 ```bash
-mclusters pa -h
-parse host pattern to host list.
+mclusters ls
+.___  ___. ____    ____      _______.     _______. __    __
+|   \/   | \   \  /   /     /       |    /       ||  |  |  |
+|  \  /  |  \   \/   /     |   (----`   |   (----`|  |__|  |
+|  |\/|  |   \_    _/       \   \        \   \    |   __   |
+|  |  |  |     |  |     .----)   |   .----)   |   |  |  |  |
+|__|  |__|     |__|     |_______/    |_______/    |__|  |__|
 
-Usage:
-  myssh clusters parse HOST_PATTERN [flag]
 
-Aliases:
-  parse, pa
+MYSSH V1.0.0
+https://github.com/cnlubo/myssh
 
-Flags:
-  -e, --expand   Expand the host list output to multiple lines
-  -h, --help     help for parse
 
-Global Flags:
-      --configPath string   Path where store myssh profiles.
-                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
-      --mkmPath string      Path where myssh should store multi SSHKeys.
-                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
-      --no-color            Disable color when outputting message.
-      --sshPath string      Path to .ssh folder.
-                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+   CLUSTERNAME              HOSTPATTERN
+ ---------------- --------------------------------
+  A                foo[01-03].com bar.org
+  B                bar.org baz[a-b,d,e-g].cn
+                   foo02.com
+  C                {A} * {B}
+  D                {A} - {B}
+
 ```
+![mclusters](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-1.gif)
