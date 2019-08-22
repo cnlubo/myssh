@@ -388,3 +388,13 @@ mclusters ls
 ```
 ![mclusters](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-1.gif)
 
+### 管理 cluster
+
+```bash
+mclusters add
+mclusters ls
+mclusters del
+```
+![mclusters-manage](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-manage.gif)
+
+
