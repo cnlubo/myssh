@@ -246,8 +246,18 @@ Use "myssh alias [command] --help" for more information about a command.
 ```
 ### Add a new alias
 
+```bash
+malias add
+```
 
 ![malias-add](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-add.gif)
+
+### List or query alias
+
+![malias-list](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-list.gif)
+
+
+
 
 ## manage clusters
 
