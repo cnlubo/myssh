@@ -208,7 +208,7 @@ clusters: []
 ```
 文件名一般与context名称相同,可以使用mclusters 命令来管理此配置文件.
 
-## 管理 ssh alias config 文件
+## 管理 SSH alias config
 
 ```bash
 malias -h
@@ -244,7 +244,7 @@ Global Flags:
 
 Use "myssh alias [command] --help" for more information about a command.
 ```
-### Add a new alias
+### 创建 SSH alias
 
 ```bash
 malias add
@@ -252,30 +252,30 @@ malias add
 
 ![malias-add](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-add.gif)
 
-### List or query alias
+### 查询 SSH alias
 
 ![malias-list](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-list.gif)
 
 支持模糊查询，例如:malias ls test
 
-### Delete one or more alias
+### 删除 one or more alias
 
 ```bash
 malias del test test-1
 ✔ deleted successfully!!!
 ```
-### Update an alias
+### 修改 SSH alias
 
 ```bash
 malias update test1
 ```
-### login server
+### 快捷登录服务器
 
 ```bash
 malias go test1
 ```
 
-### Copy SSH public key to a alias Host
+### 拷贝 SSH public key to a alias Host
 
 ```bash
 Copy SSH public key to alias Host
