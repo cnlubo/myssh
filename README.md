@@ -388,7 +388,7 @@ mclusters ls
 ```
 ![mclusters](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-1.gif)
 
-### 管理 cluster
+### 管理 clusters
 
 ```bash
 mclusters add
@@ -397,4 +397,32 @@ mclusters del
 ```
 ![mclusters-manage](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-manage.gif)
 
+### 批量执行命令
 
+```bash
+mclusters bt -h
+Batch exec command for cluster.
+
+Usage:
+  myssh clusters batch hostPatterns command ... [flags]
+
+Aliases:
+  batch, bt
+
+Flags:
+  -h, --help                  help for batch
+  -i, --identityfile string   identity file (private key) for public key authentication.
+  -P, --password              Prompt for password
+  -p, --port int              Port for the remote SSH service (default 22)
+  -u, --user string           User account for SSH login
+
+Global Flags:
+      --configPath string   Path where store myssh profiles.
+                            can also be set by the MYSSH_CONFIG_HOME environment variable. (default "/Users/ak47/.myssh")
+      --mkmPath string      Path where myssh should store multi SSHKeys.
+                            can also be set by the MKM_PATH environment variable. (default "/Users/ak47/.mkm")
+      --no-color            Disable color when outputting message.
+      --sshPath string      Path to .ssh folder.
+                            can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+```
+![mclusters-batch](https://github.com/cnlubo/myssh/blob/master/snapshots/mclusters-batch.gif)
