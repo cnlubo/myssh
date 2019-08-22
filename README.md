@@ -106,13 +106,13 @@ Use "myssh km [command] --help" for more information about a command.
 mkm init
 ```
 
-所有的 SSH key 都存储在 \$HOME/.mkm目录中,如果$HOME/.ssh目录下存在 id_rsa & id_rsa.pub key pairs 将被移动到\$HOME/.mkm/default.
+所有的 SSH keys 都存储在 \$HOME/.mkm目录中,如果$HOME/.ssh目录下存在 id_rsa & id_rsa.pub key pairs 将被移动到\$HOME/.mkm/default.
 
 ### 创建 SSH key
 
-Currently ONLY RSA and ED25519 keys are supported!
+当前支持 RSA 和 ED25519 两种类型的SSH key
 
-## Manage configfile
+## 管理配置文件
 
 ```bash
 mcfg -h
@@ -269,13 +269,10 @@ malias del test test-1
 ### 修改 SSH alias
 
 ```bash
-malias update test1
+malias update test3
 ```
-### 快捷登录服务器
+![malias-update](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-update.gif)
 
-```bash
-malias go test1
-```
 
 ### 拷贝 SSH public key to a alias Host
 
@@ -299,6 +296,14 @@ Global Flags:
       --no-color            Disable color when outputting message.
       --sshPath string      Path to .ssh folder.
                             can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
+```
+
+![malias-kcp](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-kcp.gif)
+
+### 快捷登录服务器
+
+```bash
+malias go test1
 ```
 
 ## manage clusters
