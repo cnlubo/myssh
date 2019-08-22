@@ -330,7 +330,7 @@ Global Flags:
       --sshPath string      Path to .ssh folder.
                             can also be set by the SSH_PATH environment variable. (default "/Users/ak47/.ssh")
 ```
-![malias-batch](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-batch.gif)
+![malias-batch](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-btach.gif)
 
 
 ## manage clusters
