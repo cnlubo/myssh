@@ -252,12 +252,13 @@ func (cc *cfgSetCommand) Init(c *Cli) {
 		Long:  setConfigDesc,
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			if err := utils.ArgumentsCheck(len(args), 1, 1); err != nil {
+			if err := utils.ArgumentsCheck(len(args), -1, 0); err != nil {
 				_ = cc.Cmd().Help()
 				fmt.Println()
 				return errors.WithMessage(err, "arguments input failed")
 			} else {
-				return cc.runSetConfig(args)
+				// return cc.runSetConfig(args)
+				return myssh.InteractiveSetContext(&cc.cli.Env)
 			}
 		},
 	}
