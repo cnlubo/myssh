@@ -254,9 +254,9 @@ malias add
 
 ### List or query alias
 
-![malias-list](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-list.jpg)
+![malias-list](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-list.gif)
 
-
+支持模糊查询，例如:malias ls test
 
 
 ## manage clusters
