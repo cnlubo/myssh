@@ -8,11 +8,11 @@
 
 # myssh
 
-使用 Go 编写的简单的服务器SSH管理工具,主要将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个工具的功能整合到一起以方便使用，部分代码拷贝自这几个工具。
+使用 Go 编写的服务器SSH管理工具,主要将[sshbatch](https://github.com/agentzh/sshbatch)、[mmh](https://github.com/mritd/mmh)、[skm](https://github.com/TimothyYe/skm)、[manssh](https://github.com/xwjdsh/manssh)这几个工具的功能整合到一起以方便使用,部分代码拷贝自这几个工具。
 
 ## 安装
 
-可直接从 [release](https://github.com/cnlubo/myssh/releases) 页下载预编译的二进制文件，然后执行 myssh install 即可;卸载直接执行 myssh uninstall,卸载命令不会删除 ~/.myssh 配置目录.
+可直接从 [release](https://github.com/cnlubo/myssh/releases) 页下载预编译的二进制文件，然后执行 myssh install 安装,卸载直接执行 myssh uninstall,卸载命令不会删除 ~/.myssh 配置目录。
 
 ## 基本命令
 
