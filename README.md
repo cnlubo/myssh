@@ -254,7 +254,7 @@ malias add
 
 ### List or query alias
 
-![malias-list](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-list.gif)
+![malias-list](https://github.com/cnlubo/myssh/blob/master/snapshots/malias-list.jpg)
 
 
 
