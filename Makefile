@@ -14,6 +14,11 @@ all:
                             -X '${VERSION_PKG}/version.GitCommit=${COMMIT_SHA1}' \
                             -w -s" \
                             ./cmd
+release: all
+	ghr -u cnlubo -t $(GITHUB_RELEASE_TOKEN) -replace -recreate --debug ${BUILD_VERSION} dist
+
+pre-release: all
+	ghr -u cnlubo -t $(GITHUB_RELEASE_TOKEN) -replace -recreate -prerelease --debug ${BUILD_VERSION} dist
 
 clean:
 	rm -rf ${DEST_DIR}
