@@ -619,7 +619,10 @@ func AliasInteractiveLogin(sshConfigFile string, promptPass bool) error {
 	if err != nil {
 		return err
 	}
-
+	if servers == nil {
+		// utils.PrintN(utils.Info, "not found ssh servers\n")
+		return errors.New("not found ssh servers\n")
+	}
 	cfg := &promptx.SelectConfig{
 		ActiveTpl:    `»  {{ .Name | cyan }}: {{ .User | cyan }}{{ "@" | cyan }}{{ .Address | cyan }}`,
 		InactiveTpl:  `  {{ .Name | white }}: {{ .User | white }}{{ "@" | white }}{{ .Address | white }}`,
@@ -832,7 +835,11 @@ func loadAlias(sshConfigPath string, promptPass bool, lo ListOption) (Servers, e
 			srvs = append(srvs, s)
 		}
 	}
-	return srvs, nil
+	if srvs != nil {
+		return srvs, nil
+	} else {
+		return nil, nil
+	}
 }
 
 func writeConfig(p string, cfg *ssh_config.Config) error {
