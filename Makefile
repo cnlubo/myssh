@@ -11,8 +11,7 @@ all:
         -output='${DEST_DIR}/${APP}_{{.OS}}_{{.Arch}}' \
     	-ldflags   "-X '${VERSION_PKG}/version.Version=${BUILD_VERSION}' \
                             -X '${VERSION_PKG}/version.BuildTime=${BUILD_DATE}' \
-                            -X '${VERSION_PKG}/version.GitCommit=${COMMIT_SHA1}' \
-                            -w -s" \
+                            -X '${VERSION_PKG}/version.GitCommit=${COMMIT_SHA1}'" \
                             ./cmd
 release: all
 	ghr -u cnlubo -t $(GITHUB_RELEASE_TOKEN) -replace -recreate --debug ${BUILD_VERSION} dist

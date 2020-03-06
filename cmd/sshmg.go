@@ -356,6 +356,7 @@ func (cc *aliasGoCmd) addFlags() {
 func (cc *aliasGoCmd) runAliasGo(args []string) error {
 
 	sshConfigFile := filepath.Join(cc.cli.Env.SSHPath, "config")
+	fmt.Printf(sshConfigFile)
 	if len(args) == 0 {
 		return myssh.AliasInteractiveLogin(sshConfigFile, cc.promptPass)
 	} else {

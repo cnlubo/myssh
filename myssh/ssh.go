@@ -73,48 +73,6 @@ func (s *ServerConfig) sshClient() (*ssh.Client, error) {
 		Timeout:         5 * time.Second,
 	}
 
-	// if s.Proxy != "" {
-	//
-	// 	// check max proxy
-	// 	if s.proxyCount > MaxProxy {
-	// 		return nil, errors.New(fmt.Sprintf("too many proxy server, proxy server must be <= %d", MaxProxy))
-	// 	} else {
-	// 		s.proxyCount++
-	// 	}
-	//
-	// 	// find proxy server
-	// 	proxyServer := ContextCfg.Servers.FindServerByName(s.Proxy)
-	// 	if proxyServer == nil {
-	// 		return nil, errors.New(fmt.Sprintf("cloud not found proxy server: %s", s.Proxy))
-	// 	} else {
-	// 		fmt.Printf("🔑 using proxy [%s], connect to => %s\n", s.Proxy, s.Name)
-	// 	}
-	//
-	// 	// recursive connect
-	// 	proxyClient, err := proxyServer.sshClient()
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	conn, err := proxyClient.Dial("tcp", fmt.Sprint(s.Address, ":", s.Port))
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	ncc, channel, request, err := ssh.NewClientConn(conn, fmt.Sprint(s.Address, ":", s.Port), sshConfig)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	client = ssh.NewClient(ncc, channel, request)
-	// } else {
-	// 	client, err = ssh.Dial("tcp", fmt.Sprint(s.Address, ":", s.Port), sshConfig)
-	// 	if err != nil {
-	// 		if utils.ErrorAssert(err, "ssh: unable to authenticate") {
-	// 			return nil, errors.New("connect errors,please check privateKey or password")
-	// 		} else {
-	// 			return nil, errors.Wrap(err, "connect errors")
-	// 		}
-	// 	}
-	// }
-
 	client, err = ssh.Dial("tcp", fmt.Sprint(s.Address, ":", s.Port), sshConfig)
 	if err != nil {
 		if utils.ErrorAssert(err, "ssh: unable to authenticate") {

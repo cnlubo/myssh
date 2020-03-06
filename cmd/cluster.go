@@ -50,6 +50,7 @@ func (cc *ClusterCommand) Init(c *Cli) {
 	c.AddCommand(cc, &clusterDelCmd{})
 	c.AddCommand(cc, &clusterBatchCmd{})
 	c.AddCommand(cc, &clusterKeyCopyCmd{})
+	c.AddCommand(cc, &clusterCopyCmd{})
 
 }
 
@@ -380,5 +381,54 @@ func displayClusters(clusters myssh.Clusters) (tableHeader []string, hColors []t
 
 	}
 	return clusterTableHeader, headerColors, columnColors, rowData
+
+}
+
+var ClusterCopyDesc = "Copy files or Directory to cluster."
+
+type clusterCopyCmd struct {
+	baseCommand
+	Prompt bool
+	loginOption
+}
+
+// Init initializes command.
+func (cc *clusterCopyCmd) Init(c *Cli) {
+
+	cc.cli = c
+	cc.cmd = &cobra.Command{
+		Use:     "copy hostPatterns source target",
+		Aliases: []string{"mcp"},
+		Short:   "copy files or Directory to cluster hosts (alias:mcp)",
+		Long:    ClusterCopyDesc,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := utils.ArgumentsCheck(len(args), 3, 3); err != nil {
+				myssh.Displaylogo()
+				_ = cc.Cmd().Help()
+				fmt.Println()
+				return errors.WithMessage(err, "args input failed")
+			} else {
+				// return cc.runParseHosts(args)
+				return nil
+			}
+		},
+	}
+	cc.addFlags()
+}
+
+// addFlags adds flags for specific command.
+func (cc *clusterCopyCmd) addFlags() {
+	// flagSet.BoolVarP(&cc.singleCPServer, "single", "s", false, "single server")
+	flagSet := cc.cmd.Flags()
+	flagSet.IntVarP(&cc.Login.Port, "port", "p", 22, "Port for the remote SSH service")
+	flagSet.StringVarP(&cc.Login.User, "user", "u", "", "User account for SSH login")
+	flagSet.StringVarP(&cc.Login.PrivateKey, "identityfile", "i", "", "identity file (private key) for public key authentication.")
+	// flagSet.StringVarP(&cc.Login.PrivateKeyPassword, "identitypass", "P", "", "identity password (private key) for public key authentication.")
+	flagSet.BoolVarP(&cc.Prompt, "password", "P", false, "Prompt for password")
+}
+
+func (cc *clusterCopyCmd) runCopy(args []string) error {
+	// return myssh.ClusterCopy(args, cc.Prompt, &cc.Login)
+	return nil
 
 }
