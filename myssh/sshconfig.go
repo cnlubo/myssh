@@ -620,8 +620,7 @@ func AliasInteractiveLogin(sshConfigFile string, promptPass bool) error {
 		return err
 	}
 	if servers == nil {
-		// utils.PrintN(utils.Info, "not found ssh servers\n")
-		return errors.New("not found ssh servers\n")
+		return errors.New("not found ssh server\n")
 	}
 	cfg := &promptx.SelectConfig{
 		ActiveTpl:    `»  {{ .Name | cyan }}: {{ .User | cyan }}{{ "@" | cyan }}{{ .Address | cyan }}`,
