@@ -208,7 +208,7 @@ func AliasKeyCopy(hostCfgPath string, aliases []string) error {
 				home, _ := homedir.Dir()
 				identityfile = utils.ParseRelPath(identityfile, home)
 				// check identityfile
-				_, err := privateKeyFile(identityfile, " ")
+				_, err := privateKeyFile(identityfile, "")
 				if err != nil {
 					utils.PrintErr(errors.Wrap(err, fmt.Sprintf("alias (%s) have bad identityfile", server.Name)))
 					continue

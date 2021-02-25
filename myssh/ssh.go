@@ -142,15 +142,17 @@ func (s *ServerConfig) parseAuthMethods() ([]ssh.AuthMethod, error) {
 
 // use private key to return ssh auth method
 func privateKeyFile(file, password string) (ssh.AuthMethod, error) {
+
 	buffer, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
 	var signer ssh.Signer
 
-	if password == "" {
+	if strings.TrimSpace(password) == "" {
 		signer, err = ssh.ParsePrivateKey(buffer)
 	} else {
+		fmt.Printf(password)
 		signer, err = ssh.ParsePrivateKeyWithPassphrase(buffer, []byte(password))
 	}
 

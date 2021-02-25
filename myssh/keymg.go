@@ -365,9 +365,8 @@ func CopySSHKey(connectStr string, port string, env *Environment) error {
 	key, _ := keyMap[keyList[idx].Alias]
 	alias := keyList[idx].Alias
 	identityfile = filepath.Join(env.SKMPath, alias, key.Type.PrivateKey())
-
-	// check privateKey
-	_, err := privateKeyFile(identityfile, " ")
+    // check privateKey
+	_, err := privateKeyFile(identityfile, "")
 	if err != nil {
 		return errors.Wrap(err, fmt.Sprintf("bad identityfile: [%s]", identityfile))
 	}
@@ -709,7 +708,7 @@ func getDefaultKey(sshPath string) (error, string) {
 		keyfile = filepath.Join(sshPath, kt.PrivateKey())
 		if exist := utils.PathExist(keyfile); exist {
 			// check privateKey
-			_, err := privateKeyFile(keyfile, " ")
+			_, err := privateKeyFile(keyfile, "")
 			if err != nil {
 				return errors.Wrap(err, fmt.Sprintf("bad PrivateKeyFile: [%s]", keyfile)), ""
 			}

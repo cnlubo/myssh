@@ -356,7 +356,7 @@ func ClusterKeyCopy(hostPattern string, sshPort int, sshUser string, identityfil
 		home, _ := homedir.Dir()
 		identityfile = utils.ParseRelPath(identityfile, home+"/.ssh")
 
-		_, err := privateKeyFile(identityfile, " ")
+		_, err := privateKeyFile(identityfile, "")
 		if err != nil {
 			return errors.Wrap(err, fmt.Sprintf("cluster (%s) have bad identityfile", hostPattern))
 		}
