@@ -115,4 +115,3 @@ type MainConfig struct {
 	Contexts   Contexts `yaml:"contexts"`
 	Current    string   `yaml:"current"`
 }
-

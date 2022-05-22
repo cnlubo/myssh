@@ -148,7 +148,6 @@ func (c *Cli) AddCommand(parent, child Command) {
 func (c *Cli) initConfigDir() error {
 
 	if exists := utils.PathExist(c.Env.StorePath); !exists {
-
 		// default context dir
 		defCtxPath := filepath.Join(c.Env.StorePath, "contexts")
 		if err := os.MkdirAll(filepath.Join(defCtxPath, "default"), 0755); err != nil {
@@ -171,10 +170,16 @@ func (c *Cli) initConfigDir() error {
 		}
 
 		// create symlink ~/.ssh/config
-		if err := myssh.CreateSSHlink("default", &c.Env); err != nil {
-			return errors.Wrap(err, "Create default symlink error")
+		home, _ := homedir.Dir()
+		if exists := utils.PathExist(filepath.Join(home, ".ssh", "config")); exists {
+			if err := myssh.CreateSSHlink("default", &c.Env); err != nil {
+				return errors.Wrap(err, "Create default symlink error")
+			}
+		} else {
+			if err := os.MkdirAll(filepath.Join(home, ".ssh"), 0755); err != nil {
+				return errors.Wrap(err, "Create .ssh dir error")
+			}
 		}
-
 		// default main config file
 		if err := myssh.MainConfigExample(&c.Env).WriteTo(filepath.Join(c.Env.StorePath, "main.yaml")); err != nil {
 			return errors.Wrap(err, "create main.yaml failed")
@@ -218,6 +223,7 @@ func (c *Cli) Initialize() error {
 	}
 
 	mainConfigFile := filepath.Join(op.StorePath, "main.yaml")
+
 	// load main config
 	if err := myssh.Main.LoadFrom(mainConfigFile); err != nil {
 		return errors.Wrap(err, "load mainConfigFile failed")
@@ -243,14 +249,14 @@ func (c *Cli) Initialize() error {
 
 }
 
-// NewTableAsciiDisplay creates a display instance, and uses to format output with AsciiTable.
+// NewAsciiTableDisplay  creates a display instance, and uses to format output with AsciiTable.
 func (c *Cli) NewAsciiTableDisplay() *DisplayTable {
 
 	w := tablewriter.NewWriter(os.Stdout)
 	return &DisplayTable{w}
 }
 
-// Print outputs the obj's fields.
+// PrintTable Print outputs the obj's fields.
 func (c *Cli) PrintTable(tableHead []string, headerColors []tablewriter.Colors, columnColors []tablewriter.Colors, rowData [][]string) {
 
 	display := c.NewAsciiTableDisplay()
