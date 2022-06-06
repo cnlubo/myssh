@@ -21,17 +21,17 @@ type ListOption struct {
 // server config
 type ServerConfig struct {
 	Name                string        `yaml:"name"`
-	User                string        `yaml:"user"`
-	Password            string        `yaml:"password"`
+	Address             string        `yaml:"address"`
+	Port                int           `yaml:"port,omitempty"`
+	User                string        `yaml:"user,omitempty"`
+	Password            string        `yaml:"password,omitempty"`
+	PrivateKey          string        `yaml:"privateKey,omitempty"`
+	PrivateKeyPassword  string        `yaml:"privateKey_password,omitempty"`
 	Method              string        `yaml:"method"` // auth method default：key，options:password、key
 	SuRoot              bool          `yaml:"su_root"`
 	UseSudo             bool          `yaml:"use_sudo"`
 	NoPasswordSudo      bool          `yaml:"no_password_sudo"`
 	RootPassword        string        `yaml:"root_password"`
-	PrivateKey          string        `yaml:"privateKey"`
-	PrivateKeyPassword  string        `yaml:"privateKey_password"`
-	Address             string        `yaml:"address"`
-	Port                int           `yaml:"port"`
 	ServerAliveInterval time.Duration `yaml:"server_alive_interval"`
 }
 

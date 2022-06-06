@@ -4,7 +4,7 @@ import (
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
 	_ "github.com/gookit/color"
-	_ "github.com/mritd/sshutils"
+	//_ "github.com/mritd/sshutils"
 	"github.com/pkg/errors"
 	"regexp"
 	"strconv"

@@ -2,9 +2,10 @@ package myssh
 
 import (
 	"fmt"
+	"github.com/cnlubo/myssh/confirmation"
+	"github.com/cnlubo/myssh/prompt"
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
-	_ "github.com/goinggo/mapstructure"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"
@@ -43,7 +44,7 @@ func KeyStoreInit(env *Environment) error {
 		}
 	} else {
 		if ok, _ := utils.IsEmpty(keyStorePath); !ok {
-			return errors.New(fmt.Sprintf("KeyStore: %s already exists", keyStorePath))
+			return errors.New(fmt.Sprintf("KeyStore: %s is not empty", keyStorePath))
 		}
 	}
 
@@ -96,11 +97,26 @@ func createDefaultSSHKey(env *Environment) error {
 		}
 	} else {
 		// create default SSHKey
-		c := promptx.NewDefaultConfirm("Do you want to create default SSHKey", true)
-		confirm, err = c.Run()
+		//c := prompt.NewDefaultConfirm("Do you want to create default SSHKey", true)
+		//confirm, err = c.Run()
+		//if err != nil {
+		//	return err
+		//}
+
+		input := confirmation.New("Do you want to create default SSHKey",
+			confirmation.NewValue(false))
+		input.Template = confirmation.TemplateYN
+		input.ResultTemplate = confirmation.ResultTemplateYN
+		input.KeyMap.SelectYes = append(input.KeyMap.SelectYes, "+")
+		input.KeyMap.SelectNo = append(input.KeyMap.SelectNo, "-")
+		input.ExtendedTemplateFuncs = prompt.FuncMap
+
+		confirm, err = input.RunPrompt()
 		if err != nil {
-			return err
+			fmt.Printf("Error: %v\n", err)
+			os.Exit(1)
 		}
+		fmt.Println(confirm)
 		if confirm {
 			// Create default alias directory
 			err := os.Mkdir(filepath.Join(keyStorePath, DefaultKey), 0755)
@@ -365,7 +381,7 @@ func CopySSHKey(connectStr string, port string, env *Environment) error {
 	key, _ := keyMap[keyList[idx].Alias]
 	alias := keyList[idx].Alias
 	identityfile = filepath.Join(env.SKMPath, alias, key.Type.PrivateKey())
-    // check privateKey
+	// check privateKey
 	_, err := privateKeyFile(identityfile, "")
 	if err != nil {
 		return errors.Wrap(err, fmt.Sprintf("bad identityfile: [%s]", identityfile))
@@ -559,7 +575,7 @@ func deleteKey(alias string, key *SSHKey, env *Environment) error {
 	var err error
 	inUse := key.IsDefault
 	if inUse {
-		c := promptx.NewDefaultConfirm("SSHKey ["+alias+"] is currently in use, please confirm to delete it", false)
+		c := prompt.NewDefaultConfirm("SSHKey ["+alias+"] is currently in use, please confirm to delete it", false)
 		if confirm, err = c.Run(); err != nil {
 			return err
 		}

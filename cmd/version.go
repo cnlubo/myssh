@@ -2,10 +2,9 @@ package main
 
 import (
 	"encoding/base64"
-	"fmt"
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/myssh/version"
-	"github.com/gookit/color"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -59,7 +58,8 @@ func (v *VersionCommand) runVersion() error {
 		utils.ExitN(utils.Err, "failed to get system version:"+err.Error(), 1)
 	}
 	banner, _ := base64.StdEncoding.DecodeString(version.BannerBase64)
-	fmt.Printf(color.FgLightGreen.Render(versionTpl), banner, version.Appname, version.Version, version.GitHub, result.Os, result.Arch, result.GoVersion, result.BuildTime, result.GitCommit)
-
+	// fmt.Printf(color.FgLightGreen.Render(versionTpl), banner, version.Appname, version.Version, version.GitHub, result.Os, result.Arch, result.GoVersion, result.BuildTime, result.GitCommit)
+	c := color.New(color.FgHiGreen, color.Bold)
+	_, _ = c.Printf(versionTpl, banner, version.Appname, version.Version, version.GitHub, result.Os, result.Arch, result.GoVersion, result.BuildTime, result.GitCommit)
 	return nil
 }

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/cnlubo/myssh/version"
-	"github.com/gookit/color"
+	"github.com/fatih/color"
 	"time"
 )
 
@@ -36,5 +36,7 @@ var logo = `%s
 func Displaylogo() {
 
 	banner, _ := base64.StdEncoding.DecodeString(version.BannerBase64)
-	fmt.Printf(color.FgLightGreen.Render(logo), banner, version.Appname, version.Version, color.FgMagenta.Render(version.GitHub))
+	fgColor := color.New(color.FgHiGreen, color.Bold)
+	fgColorGithub := color.New(color.FgMagenta, color.Bold).SprintFunc()
+	_, _ = fgColor.Printf(logo, banner, version.Appname, version.Version, fgColorGithub(version.GitHub))
 }

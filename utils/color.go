@@ -8,14 +8,14 @@ import (
 )
 
 const (
-	ColorRed     = "red"
-	ColorGreen   = "green"
-	ColorYellow  = "yellow"
-	ColorBlue    = "blue"
-	ColorMagenta = "magenta"
-	ColorCyan    = "cyan"
-	ColorWhite   = "white"
-	ColorGray    = "gray"
+//ColorRed     = "red"
+//ColorGreen   = "green"
+//ColorYellow  = "yellow"
+//ColorBlue    = "blue"
+//ColorMagenta = "magenta"
+//ColorCyan    = "cyan"
+//ColorWhite   = "white"
+//ColorGray = "gray"
 )
 
 type colorCount struct {

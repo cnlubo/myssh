@@ -8,7 +8,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/pkg/errors"
 	"github.com/schwarmco/go-cartesian-product"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"regexp"
 	"sort"
@@ -223,7 +223,7 @@ func DeleteClusters(names []string) (Clusters, error) {
 		return nil, errors.New("none clusters delete!!!")
 	} else {
 		message := "(Please confirm to delete clusters [" + clName + "]"
-		c := promptx.NewDefaultConfirm(message,false)
+		c := promptx.NewDefaultConfirm(message, false)
 		confirm, err = c.Run()
 		if err != nil {
 			return nil, err

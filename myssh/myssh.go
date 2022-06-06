@@ -38,7 +38,7 @@ func InteractiveSetContext(env *Environment) error {
 		Config: cfg,
 	}
 	idx := s.Run()
-	err := SetContext(Main.Contexts[idx].Name,env)
+	err := SetContext(Main.Contexts[idx].Name, env)
 	if err != nil {
 		return errors.Wrapf(err, "set configfile failed")
 	}

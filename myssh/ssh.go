@@ -3,7 +3,9 @@ package myssh
 import (
 	"fmt"
 	"github.com/cnlubo/myssh/utils"
-	"github.com/mritd/sshutils"
+	//"github.com/mritd/sshutils"
+
+	//"github.com/mritd/sshutils"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ssh"
 	"io/ioutil"
@@ -55,6 +57,12 @@ func (s *ServerConfig) setDefault() {
 // 	}
 // }
 
+// wrapperClient return a standard ssh client with specific parameters set
+func (s *ServerConfig) wrapperClient() (*ssh.Client, error) {
+
+	return s.sshClient()
+}
+
 // return a ssh client intense point
 func (s *ServerConfig) sshClient() (*ssh.Client, error) {
 
@@ -72,8 +80,8 @@ func (s *ServerConfig) sshClient() (*ssh.Client, error) {
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		Timeout:         5 * time.Second,
 	}
-
 	client, err = ssh.Dial("tcp", fmt.Sprint(s.Address, ":", s.Port), sshConfig)
+
 	if err != nil {
 		if utils.ErrorAssert(err, "ssh: unable to authenticate") {
 			return nil, errors.New("connect errors,please check privateKey or password")
@@ -83,6 +91,22 @@ func (s *ServerConfig) sshClient() (*ssh.Client, error) {
 	}
 
 	return client, nil
+}
+
+// wrapperSession returns a standard ssh session with specific parameters set
+// if there is an error, the ssh session is nil
+func (s *ServerConfig) wrapperSession(client *ssh.Client) (*ssh.Session, error) {
+	session, err := client.NewSession()
+	if err != nil {
+		return nil, err
+	}
+	//_ = session.Setenv(envMMH, "true")
+	//if s.Environment != nil {
+	//	for k, v := range s.Environment {
+	//		_ = session.Setenv(k, v)
+	//	}
+	//}
+	return session, nil
 }
 
 // start a ssh terminal
@@ -100,11 +124,11 @@ func (s *ServerConfig) Terminal() error {
 		return err
 	}
 
-	var sshSession *sshutils.SSHSession
+	var sshSession *utils.SSHSession
 	if s.SuRoot {
-		sshSession = sshutils.NewSSHSessionWithRoot(session, s.UseSudo, s.NoPasswordSudo, s.RootPassword, s.Password)
+		sshSession = utils.NewSSHSessionWithRoot(session, s.UseSudo, s.NoPasswordSudo, s.RootPassword, s.Password)
 	} else {
-		sshSession = sshutils.NewSSHSession(session)
+		sshSession = utils.NewSSHSession(session)
 	}
 
 	defer func() {

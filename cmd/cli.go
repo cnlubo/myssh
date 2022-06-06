@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/cnlubo/myssh/myssh"
 	"github.com/cnlubo/myssh/utils"
-	"github.com/gookit/color"
+	"github.com/fatih/color"
 	"github.com/mitchellh/go-homedir"
 	"github.com/olekukonko/tablewriter"
 	"github.com/pkg/errors"
@@ -52,7 +52,7 @@ func NewCli() *Cli {
 	cc.rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
 
 		if cc.noColor {
-			color.Enable = false
+			color.NoColor = true
 		}
 
 		if len(args) == 0 {
@@ -140,7 +140,11 @@ func (c *Cli) AddCommand(parent, child Command) {
 	childCmd.SilenceErrors = true
 	childCmd.DisableFlagsInUseLine = true
 	childCmd.PreRun = func(cmd *cobra.Command, args []string) {
-
+		if c.noColor {
+			fmt.Println(c.noColor)
+			fmt.Println("aa")
+			color.NoColor = true
+		}
 	}
 	parentCmd.AddCommand(childCmd)
 }

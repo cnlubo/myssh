@@ -1,8 +1,9 @@
 package utils
 
 import (
+	"bytes"
 	"fmt"
-	"github.com/gookit/color"
+	"github.com/fatih/color"
 	"github.com/pkg/errors"
 	"os"
 	"os/exec"
@@ -11,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"text/template"
 )
 
 const (
@@ -33,19 +35,40 @@ const (
 	Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 )
 
+var (
+	yellow  = color.New(color.FgYellow).SprintFunc()
+	red     = color.New(color.FgRed, color.Bold).SprintFunc()
+	green   = color.New(color.FgHiGreen, color.Bold).SprintFunc()
+	magenta = color.New(color.FgMagenta, color.Bold).SprintFunc()
+	blue    = color.New(color.FgHiBlue, color.Bold).SprintFunc()
+	white   = color.New(color.FgHiWhite, color.Bold).SprintFunc()
+	gray    = color.New(color.FgCyan, color.Bold).SprintFunc()
+)
+
 func CheckAndExit(err error) {
 	if err != nil {
 		ExitN(Err, err.Error(), 1)
 	}
 }
+func CheckErr(err error) bool {
+	PrintErr(err)
+	return err == nil
+}
 func PrintErr(err error) {
+	a := yellow
 	if err != nil {
-		fmt.Printf("%s%s\n", color.FgYellow.Render(CrossSymbol), color.Style{color.FgRed, color.OpBold}.Render(err.Error()))
+		fmt.Printf("%s%s\n", a(CrossSymbol), red(err.Error()))
 
+	}
+}
+func PrintErrWithPrefix(prefix string, err error) {
+	if err != nil {
+		fmt.Println(prefix, err.Error())
 	}
 }
 
 func PrintN(messageType string, message string) {
+
 	if strings.TrimSpace(messageType) == "" {
 		messageType = Info
 	}
@@ -54,17 +77,18 @@ func PrintN(messageType string, message string) {
 	}
 	switch messageType {
 	case Info:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(CheckSymbol), color.FgGreen.Render(message))
+		//fmt.Printf("%s%s\n", color.FgYellow.Render(CheckSymbol), color.FgGreen.Render(message))
+		fmt.Printf("%s%s\n", yellow(CheckSymbol), green(message))
 	case Err:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(CrossSymbol), color.FgRed.Render(message))
+		fmt.Printf("%s%s\n", yellow(CrossSymbol), red(message))
 	case Warn:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(ExclamSymbol), color.FgMagenta.Render(message))
+		fmt.Printf("%s%s\n", yellow(ExclamSymbol), magenta(message))
 	case Inst:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(ArrowSymbol), color.FgBlue.Render(message))
+		fmt.Printf("%s%s\n", yellow(ArrowSymbol), blue(message))
 	case Uinst:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(DeleteSymbol), color.FgWhite.Render(message))
+		fmt.Printf("%s%s\n", yellow(DeleteSymbol), white(message))
 	case None:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(NoneSymbol), color.FgGray.Render(message))
+		fmt.Printf("%s%s\n", yellow(NoneSymbol), gray(message))
 
 	}
 }
@@ -80,11 +104,11 @@ func ExitN(messageType string, message string, code int) {
 
 	switch messageType {
 	case Info:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(CheckSymbol), color.FgGreen.Render(message))
+		fmt.Printf("%s%s\n", yellow(CheckSymbol), green(message))
 	case Err:
-		fmt.Printf("%s%s\n", color.FgRed.Render(CrossSymbol), color.FgRed.Render(message))
+		fmt.Printf("%s%s\n", red(CrossSymbol), red(message))
 	case Warn:
-		fmt.Printf("%s%s\n", color.FgYellow.Render(ExclamSymbol), color.FgMagenta.Render(message))
+		fmt.Printf("%s%s\n", yellow(ExclamSymbol), magenta(message))
 
 	}
 	os.Exit(code)
@@ -256,7 +280,7 @@ func MergeSlice(s1 []string, s2 []string) []string {
 
 func DeleteExtraSpace(s string) string {
 	// 删除字符串中的多余空格，有多个空格时，仅保留一个空格
-	s1 := strings.Replace(s, "	", " ", -1)      // 替换tab为空格
+	s1 := strings.Replace(s, "	", " ", -1)   // 替换tab为空格
 	regstr := "\\s{2,}"                         // 两个及两个以上空格的正则表达式
 	reg, _ := regexp.Compile(regstr)            // 编译正则表达式
 	s2 := make([]byte, len(s1))                 // 定义字符数组切片
@@ -305,3 +329,22 @@ func ParseConnect(connectStr string) (string, string, string) {
 	}
 	return u, hostname, port
 }
+
+func Render(tpl *template.Template, data interface{}) []byte {
+	var buf bytes.Buffer
+	err := tpl.Execute(&buf, data)
+	if err != nil {
+		return []byte(fmt.Sprintf("%v", data))
+	}
+	return buf.Bytes()
+}
+
+// ErrEOF is the error returned from prompts when EOF is encountered.
+var ErrEOF = errors.New("^D")
+
+// ErrInterrupt is the error returned from prompts when an interrupt (ctrl-c) is
+// encountered.
+var ErrInterrupt = errors.New("^C")
+
+// ErrAbort is the error returned when confirm prompts are supplied "n"
+var ErrAbort = errors.New("")
