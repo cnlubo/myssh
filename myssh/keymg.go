@@ -2,6 +2,7 @@ package myssh
 
 import (
 	"fmt"
+	"github.com/cnlubo/myssh/common"
 	"github.com/cnlubo/myssh/confirmation"
 	"github.com/cnlubo/myssh/prompt"
 	"github.com/cnlubo/myssh/utils"
@@ -104,12 +105,12 @@ func createDefaultSSHKey(env *Environment) error {
 		//}
 
 		input := confirmation.New("Do you want to create default SSHKey",
-			confirmation.NewValue(false))
+			confirmation.NewValue(true))
 		input.Template = confirmation.TemplateYN
 		input.ResultTemplate = confirmation.ResultTemplateYN
 		input.KeyMap.SelectYes = append(input.KeyMap.SelectYes, "+")
 		input.KeyMap.SelectNo = append(input.KeyMap.SelectNo, "-")
-		input.ExtendedTemplateFuncs = prompt.FuncMap
+		input.ExtendedTemplateFuncs = common.ClorFuncMap
 
 		confirm, err = input.RunPrompt()
 		if err != nil {

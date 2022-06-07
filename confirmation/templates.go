@@ -38,13 +38,13 @@ const ResultTemplateArrow = `
 //{{- end -}}
 //`
 const TemplateYN = `
-{{- .Prompt | Bold | cyan -}}
+{{- .Prompt | bold | red -}}
 {{ if .YesSelected  -}}
-	{{- print "[" (Bold "Y") "/n]" -}}
+	{{- print bold | red " [Y" (white "/") (green "n") (red "]" ) -}}
 {{- else if .NoSelected -}}
-	{{- print (Bold " [") (Bold (cyan "y/")) (Bold (yellow "N")) (Bold "]") -}}
+	{{- print (bold " [") (bold (green "y/")) (bold (red "N")) (bold "]") -}}
 {{- else -}}
-	{{- " [y/n] " | red -}}
+	{{- " [y/n] " | blue -}}
 {{- end -}}
 `
 
