@@ -24,36 +24,21 @@ const ResultTemplateArrow = `
 {{- end }}
 `
 
-// TemplateYN is a classic template with ja [yn] indicator where the current
-// value is capitalized and bold.
-//{{- Bold .Prompt -}}
-//const TemplateYN = `
-//{{- .Prompt | Bold | cyan -}}
-//{{ if .YesSelected  -}}
-//	{{- print " [" (Bold "Y") "/n]" -}}
-//{{- else if .NoSelected -}}
-//	{{- print " red([y/" (Bold "N") "])" -}}
-//{{- else -}}
-//	{{- " [y/n]" -}}
-//{{- end -}}
-//`
 const TemplateYN = `
 {{- .Prompt | bold | red -}}
 {{ if .YesSelected  -}}
-	{{- print bold | red " [Y" (white "/") (green "n") (red "]" ) -}}
+	{{- print | red (bold " [Y/") red ("n") red (bold "]") -}}
 {{- else if .NoSelected -}}
-	{{- print (bold " [") (bold (green "y/")) (bold (red "N")) (bold "]") -}}
+	{{- print | red (bold " [y/N]") -}}
 {{- else -}}
-	{{- " [y/n] " | blue -}}
+	{{- " [y/n]" -}}
 {{- end -}}
 `
-
-// ResultTemplateYN is the ResultTemplate that matches TemplateYN.
 const ResultTemplateYN = `
-{{- .Prompt -}}
+{{- .Prompt | bold | green -}}
 {{ if .FinalValue -}}
-	{{- print " [" (Foreground "32" (Bold "Y")) "/n]" -}}
+    {{- print | green (bold " [Y/n]") -}}
 {{- else -}}
-	{{- print " [y/" (Foreground "32" (Bold "N")) "]" -}}
+	{{- print | green (bold " [y/N]") -}}
 {{- end }}
 `
