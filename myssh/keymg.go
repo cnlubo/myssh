@@ -105,18 +105,13 @@ func createDefaultSSHKey(env *Environment) error {
 
 		input := confirmation.New("Do you want to create default SSHKey",
 			confirmation.NewValue(true))
-		input.Template = confirmation.TemplateYN
-		input.ResultTemplate = confirmation.ResultTemplateYN
-		input.KeyMap.SelectYes = append(input.KeyMap.SelectYes, "+")
-		input.KeyMap.SelectNo = append(input.KeyMap.SelectNo, "-")
-		//input.ExtendedTemplateFuncs = common.ClorFuncMap
+		//input.Template = confirmation.TemplateYN
+		//input.ResultTemplate = confirmation.ResultTemplateYN
+		//input.KeyMap.SelectYes = append(input.KeyMap.SelectYes, "+")
+		//input.KeyMap.SelectNo = append(input.KeyMap.SelectNo, "-")
 
 		confirm, err = input.RunPrompt()
-		if err != nil {
-			fmt.Printf("Error: %v\n", err)
-			os.Exit(1)
-		}
-		fmt.Println(confirm)
+		utils.CheckAndExit(err)
 		if confirm {
 			// Create default alias directory
 			err := os.Mkdir(filepath.Join(keyStorePath, DefaultKey), 0755)
@@ -171,6 +166,8 @@ func createDefaultSSHKey(env *Environment) error {
 			runHook(ag.Alias, env)
 			utils.PrintN(utils.Info, fmt.Sprintf("Now using SSH key: [%s]", ag.Alias))
 
+		} else {
+			return errors.New("Exit...")
 		}
 	}
 	return nil

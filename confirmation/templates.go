@@ -4,41 +4,39 @@ package confirmation
 // arrow.
 
 const TemplateArrow = `
-{{- Bold .Prompt -}}
+{{- .Prompt | bold | cyan -}}
 {{ if .YesSelected -}}
-	{{- print (Bold " ▸Yes ") " No" -}}
+	{{- print (bold (yellow " ▸Yes ")) (cyan " No") -}}
 {{- else if .NoSelected -}}
-	{{- print "  Yes " (Bold "▸No") -}}
+	{{- print (cyan "  Yes ") (bold (yellow "▸No")) -}}
 {{- else -}}
 	{{- "  Yes  No" -}}
 {{- end -}}
 `
-
-// ResultTemplateArrow is the ResultTemplate that matches TemplateArrow.
 const ResultTemplateArrow = `
 {{- print .Prompt " " -}}
 {{- if .FinalValue -}}
-	{{- Foreground "32" "Yes" -}}
+	{{- print | cyan (bold "Yes") -}}
 {{- else -}}
-	{{- Foreground "32" "No" -}}
+	{{- print | cyan (bold "No") -}}
 {{- end }}
 `
 
 const TemplateYN = `
-{{- .Prompt | bold | red -}}
+{{- .Prompt | bold | cyan  -}}
 {{ if .YesSelected  -}}
-	{{- print | red (bold " [Y/") red ("n") red (bold "]") -}}
+	{{- print (cyan " [") (bold (yellow "Y")) (cyan "/n]") -}}
 {{- else if .NoSelected -}}
-	{{- print | red (bold " [y/N]") -}}
+    {{- print (cyan " [y/") (bold (yellow "N")) (cyan "]") -}}
 {{- else -}}
 	{{- " [y/n]" -}}
 {{- end -}}
 `
 const ResultTemplateYN = `
-{{- .Prompt | bold | green -}}
+{{- .Prompt | bold | cyan -}}
 {{ if .FinalValue -}}
-    {{- print | green (bold " [Y/n]") -}}
+    {{- print | cyan (bold " [Y/n]") -}}
 {{- else -}}
-	{{- print | green (bold " [y/N]") -}}
+	{{- print | cyan (bold " [y/N]") -}}
 {{- end }}
 `

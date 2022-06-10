@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	tea "github.com/charmbracelet/bubbletea"
-	_ "github.com/cnlubo/myssh/common"
 	"github.com/cnlubo/myssh/confirmation"
 	"github.com/cnlubo/myssh/test"
 	"github.com/muesli/termenv"
