@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/cnlubo/myssh/confirmation"
 	"github.com/cnlubo/myssh/prompt"
+	"github.com/cnlubo/myssh/selection"
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
+	"github.com/muesli/termenv"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"
@@ -20,6 +22,32 @@ const (
 	// HookName is the name of a hook that is called when present after using a key
 	HookName       = "hook"
 	DefaultBitSize = 2048
+	customTemplate = `
+{{- if .Prompt -}}
+  {{ Bold .Prompt }}
+{{ end -}}
+{{ if .IsFiltered }}
+  {{- print .FilterPrompt " " .FilterInput }}
+{{ end }}
+
+{{- range  $i, $choice := .Choices }}
+  {{- if IsScrollUpHintPosition $i }}
+    {{- print "⇡ " -}}
+  {{- else if IsScrollDownHintPosition $i -}}
+    {{- print "⇣ " -}} 
+  {{- else -}}
+    {{- print "  " -}}
+  {{- end -}} 
+
+  {{- if eq $.SelectedIndex $i }}
+   {{- print "[" (Foreground "32" (Bold "x")) "] " (Selected $choice) "\n" }}
+  {{- else }}
+    {{- print "[ ] " (Unselected $choice) "\n" }}
+  {{- end }}
+{{- end}}`
+	resultTemplate = `
+		{{- print .Prompt " " (Foreground "32"  (name .FinalChoice)) "\n" -}}
+		`
 )
 
 // SSHKey struct includes both private/public keys & isDefault flag
@@ -96,75 +124,113 @@ func createDefaultSSHKey(env *Environment) error {
 			return errors.Wrap(err, "move default PublicKey file failed")
 		}
 	} else {
-		// create default SSHKey
-		//c := prompt.NewDefaultConfirm("Do you want to create default SSHKey", true)
-		//confirm, err = c.Run()
-		//if err != nil {
-		//	return err
-		//}
-
 		input := confirmation.New("Do you want to create default SSHKey",
-			confirmation.NewValue(true))
+			confirmation.NewValue(false))
 		//input.Template = confirmation.TemplateYN
 		//input.ResultTemplate = confirmation.ResultTemplateYN
 		//input.KeyMap.SelectYes = append(input.KeyMap.SelectYes, "+")
 		//input.KeyMap.SelectNo = append(input.KeyMap.SelectNo, "-")
-
+		input.ResultTemplate = ""
 		confirm, err = input.RunPrompt()
 		utils.CheckAndExit(err)
 		if confirm {
-			// Create default alias directory
-			err := os.Mkdir(filepath.Join(keyStorePath, DefaultKey), 0755)
-			if err != nil {
-				return errors.Wrap(err, "create default alias directory failed")
-			}
-			// create default SSHKey
-			ag := &createOptions{
-				Alias:   DefaultKey,
-				Comment: DefaultKey,
-			}
-
+			//// Create default alias directory
+			//err := os.Mkdir(filepath.Join(keyStorePath, DefaultKey), 0755)
+			//if err != nil {
+			//	return errors.Wrap(err, "create default alias directory failed")
+			//}
+			//// create default SSHKey
+			//ag := &createOptions{
+			//	Alias:   DefaultKey,
+			//	Comment: DefaultKey,
+			//}
+			//
 			// supported keyType
 			var sshKeyType []KeyType
 			for _, kt := range SupportedKeyTypes {
 				sshKeyType = append(sshKeyType, kt)
 			}
+			//
+			//cfg := &promptx.SelectConfig{
+			//	ActiveTpl:    `»  {{ .Name | cyan }}`,
+			//	InactiveTpl:  `  {{ .Name | white }}`,
+			//	SelectPrompt: "SSH Key Type",
+			//	SelectedTpl:  `{{ "» " | green }}{{ "KeyType:" | green }}{{ .Name | green }}`,
+			//	DisPlaySize:  9,
+			//	DetailsTpl: `
+			//--------- SSH Key Type ----------
+			//{{ "Name:" | faint }} {{ .Name | faint }}
+			//{{ "KeyBaseName:" | faint }} {{ .KeyBaseName | faint }}
+			//{{ "SupportsVariableBitsize:" | faint }} {{ .SupportsVariableBitsize }}`,
+			//}
+			//
+			//s := &promptx.Select{
+			//	Items:  sshKeyType,
+			//	Config: cfg,
+			//}
+			//idx := s.Run()
+			//ag.Type = sshKeyType[idx].Name
+			//if sshKeyType[idx].SupportsVariableBitsize {
+			//	ag.Bits = DefaultBitSize
+			//}
+			//_, err = createKey(env, ag)
+			//if err != nil {
+			//	return err
+			//}
+			//// Set key with related alias as default used key
+			//keyMap, _ := LoadSSHKeys(env)
+			//err = createLink(ag.Alias, keyMap, env)
+			//if err != nil {
+			//	return err
+			//}
+			//// Run a potential hook
+			//runHook(ag.Alias, env)
+			//utils.PrintN(utils.Info, fmt.Sprintf("Now using SSH key: [%s]", ag.Alias))
 
-			cfg := &promptx.SelectConfig{
-				ActiveTpl:    `»  {{ .Name | cyan }}`,
-				InactiveTpl:  `  {{ .Name | white }}`,
-				SelectPrompt: "SSH Key Type",
-				SelectedTpl:  `{{ "» " | green }}{{ "KeyType:" | green }}{{ .Name | green }}`,
-				DisPlaySize:  9,
-				DetailsTpl: `
---------- SSH Key Type ----------
-{{ "Name:" | faint }} {{ .Name | faint }}
-{{ "KeyBaseName:" | faint }} {{ .KeyBaseName | faint }}
-{{ "SupportsVariableBitsize:" | faint }} {{ .SupportsVariableBitsize }}`,
+			//sp := selection.New("Select SSH Key Type:",
+			//	selection.Choices([]string{"Horse", "Car", "Plane", "Bike"}))
+
+			type article struct {
+				ID   string
+				Name string
 			}
 
-			s := &promptx.Select{
-				Items:  sshKeyType,
-				Config: cfg,
+			//choices := []article{
+			//	{ID: "123", Name: "Article A"},
+			//	{ID: "321", Name: "Article B"},
+			//	{ID: "345", Name: "Article C"},
+			//	{ID: "456", Name: "Article D"},
+			//	{ID: "444", Name: "Article E"},
+			//}
+			blue := termenv.String().Foreground(termenv.ANSI256Color(32)) // nolint:gomnd
+
+			sp := selection.New("Select SSH Key Type:",
+				selection.Choices(sshKeyType))
+			sp.PageSize = 5
+			sp.Filter = nil
+			sp.Template = customTemplate
+			sp.ResultTemplate = resultTemplate
+			sp.SelectedChoiceStyle = func(c *selection.Choice) string {
+				a, _ := c.Value.(article)
+
+				return blue.Bold().Styled(a.Name) + " " + termenv.String("("+a.ID+")").Faint().String()
 			}
-			idx := s.Run()
-			ag.Type = sshKeyType[idx].Name
-			if sshKeyType[idx].SupportsVariableBitsize {
-				ag.Bits = DefaultBitSize
+			sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
+				a, _ := c.Value.(article)
+
+				return a.Name + " " + termenv.String("("+a.ID+")").Faint().String()
 			}
-			_, err = createKey(env, ag)
+			sp.ExtendedTemplateFuncs = map[string]interface{}{
+				"name": func(c *selection.Choice) string { return c.Value.(article).Name },
+			}
+
+			choice, err := sp.RunPrompt()
 			if err != nil {
-				return err
+				fmt.Printf("Error: %v\n", err)
+
+				os.Exit(1)
 			}
-			// Set key with related alias as default used key
-			keyMap, _ := LoadSSHKeys(env)
-			err = createLink(ag.Alias, keyMap, env)
-			if err != nil {
-				return err
-			}
-			// Run a potential hook
-			runHook(ag.Alias, env)
-			utils.PrintN(utils.Info, fmt.Sprintf("Now using SSH key: [%s]", ag.Alias))
+			fmt.Println(choice)
 
 		} else {
 			return errors.New("Exit...")
@@ -216,6 +282,7 @@ func CreateSSHKey(env *Environment) (map[string]*SSHKey, error) {
 	var sshKeyType []KeyType
 	for _, kt := range SupportedKeyTypes {
 		sshKeyType = append(sshKeyType, kt)
+
 	}
 
 	cfg := &promptx.SelectConfig{

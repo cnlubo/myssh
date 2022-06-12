@@ -42,14 +42,14 @@ func NewChoice(item interface{}) *Choice {
 // Choices converts a slice of anything to a slice of choices.
 // Choices panics if the input is not a slice.
 func Choices(sliceChoices interface{}) []*Choice {
+
 	switch reflect.TypeOf(sliceChoices).Kind() {
 	case reflect.Slice:
 		slice := reflect.ValueOf(sliceChoices)
-
 		choices := make([]*Choice, 0, slice.Len())
-
 		for i := 0; i < slice.Len(); i++ {
 			value := slice.Index(i).Interface()
+			//fmt.Println(value)
 			choices = append(choices, NewChoice(value))
 		}
 

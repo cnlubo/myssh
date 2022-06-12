@@ -60,6 +60,8 @@ const (
 	DefaultFilterPlaceholder = "Type to filter choices"
 
 	accentColor = termenv.ANSI256Color(32)
+
+	DefaultHeader = "Use the arrow keys to navigate: ↓ ↑ → ←"
 )
 
 // DefaultSelectedChoiceStyle is the default style for selected choices.
@@ -74,6 +76,8 @@ func DefaultFinalChoiceStyle(c *Choice) string {
 
 // Selection represents a configurable selection prompt.
 type Selection struct {
+	// HeaderFunc Header rendering function
+	HeaderFunc func(m Model, obj interface{}, gdIndex int) string
 	// Choices represent all selectable choices of the selection. Slices of
 	// arbitrary types can be converted to a slice of choices using the helper
 	// selection.Choices.

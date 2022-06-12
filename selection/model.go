@@ -12,6 +12,7 @@ import (
 )
 
 // Model implements the bubbletea.Model for a selection prompt.
+// Model is a data container used to store TUI status information
 type Model struct {
 	*Selection
 

@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/charmbracelet/bubbles v0.11.0
 	github.com/charmbracelet/bubbletea v0.21.0
+	github.com/charmbracelet/lipgloss v0.5.0
 	github.com/cnlubo/promptx v0.0.0-20190626092511-0fff67c60c75
 	github.com/cnlubo/ssh_config v0.0.0-20190527125136-98b816cf29c8
 	github.com/davecgh/go-spew v1.1.1 // indirect
