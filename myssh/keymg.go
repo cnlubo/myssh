@@ -7,6 +7,7 @@ import (
 	"github.com/cnlubo/myssh/selection"
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
+	"github.com/fatih/color"
 	"github.com/muesli/termenv"
 	"github.com/pkg/errors"
 	"io/ioutil"
@@ -202,8 +203,9 @@ func createDefaultSSHKey(env *Environment) error {
 			//	{ID: "456", Name: "Article D"},
 			//	{ID: "444", Name: "Article E"},
 			//}
-			blue := termenv.String().Foreground(termenv.ANSI256Color(32)) // nolint:gomnd
-
+			//blue := termenv.String().Foreground(termenv.ANSI256Color(32)) // nolint:gomnd
+			//blue := color.New(color.BgHiBlue, color.Bold).PrintfFunc()
+			blue := color.New(color.Bold, color.FgHiBlue).SprintfFunc()
 			sp := selection.New("Select SSH Key Type:",
 				selection.Choices(sshKeyType))
 			sp.PageSize = 5
@@ -213,7 +215,8 @@ func createDefaultSSHKey(env *Environment) error {
 			sp.SelectedChoiceStyle = func(c *selection.Choice) string {
 				a, _ := c.Value.(KeyType)
 
-				return blue.Bold().Styled(a.Name) + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
+				//return blue.Bold().Styled(a.Name) + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
+				return blue(a.Name)
 			}
 			sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
 				a, _ := c.Value.(KeyType)

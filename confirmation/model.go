@@ -66,7 +66,7 @@ func (m *Model) initTemplate() (*template.Template, error) {
 	tmpl.Funcs(termenv.TemplateFuncs(m.ColorProfile))
 	tmpl.Funcs(common.UtilFuncMap())
 	tmpl.Funcs(m.ExtendedTemplateFuncs)
-	tmpl.Funcs(common.ClorFuncMap)
+	tmpl.Funcs(common.ColorFuncMap)
 	return tmpl.Parse(m.Template)
 }
 
@@ -79,7 +79,7 @@ func (m *Model) initResultTemplate() (*template.Template, error) {
 	tmpl.Funcs(termenv.TemplateFuncs(m.ColorProfile))
 	tmpl.Funcs(common.UtilFuncMap())
 	tmpl.Funcs(m.ExtendedTemplateFuncs)
-	tmpl.Funcs(common.ClorFuncMap)
+	tmpl.Funcs(common.ColorFuncMap)
 	return tmpl.Parse(m.ResultTemplate)
 }
 

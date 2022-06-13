@@ -4,7 +4,6 @@ import (
 	"github.com/gookit/color"
 	"sort"
 	"sync"
-	"text/template"
 )
 
 const (
@@ -58,14 +57,14 @@ var cs = colorCounts{
 	// colorCount{ColorWhite, color.FgWhite, 0},
 }
 
-var ColorFuncMap = template.FuncMap{
-
-	ColorRed:     color.Style{color.FgRed, color.OpBold}.Render,
-	ColorGreen:   color.Style{color.FgGreen, color.OpBold}.Render,
-	ColorYellow:  color.Style{color.FgYellow, color.OpBold}.Render,
-	ColorMagenta: color.Style{color.FgMagenta, color.OpBold}.Render,
-	ColorCyan:    color.Style{color.FgCyan, color.OpBold}.Render,
-	ColorGray:    color.Style{color.FgGray, color.OpBold}.Render,
-	ColorBlue:    color.Style{color.FgBlue, color.OpBold}.Render,
-	// ColorWhite:   color.Style{color.FgCyan, color.OpBold}.Render,
-}
+//var ColorFuncMap = template.FuncMap{
+//
+//	//ColorRed:     color.Style{color.FgRed, color.OpBold}.Render,
+//	//ColorGreen:   color.Style{color.FgGreen, color.OpBold}.Render,
+//	//ColorYellow:  color.Style{color.FgYellow, color.OpBold}.Render,
+//	//ColorMagenta: color.Style{color.FgMagenta, color.OpBold}.Render,
+//	//ColorCyan:    color.Style{color.FgCyan, color.OpBold}.Render,
+//	//ColorGray:    color.Style{color.FgGray, color.OpBold}.Render,
+//	//ColorBlue:    color.Style{color.FgBlue, color.OpBold}.Render,
+//	// ColorWhite:   color.Style{color.FgCyan, color.OpBold}.Render,
+//}

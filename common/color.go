@@ -5,7 +5,7 @@ import (
 	"text/template"
 )
 
-var ClorFuncMap = template.FuncMap{
+var ColorFuncMap = template.FuncMap{
 	"black":     color.New(color.FgHiBlack).SprintFunc(),
 	"red":       color.New(color.FgHiRed).SprintFunc(),
 	"green":     color.New(color.FgHiGreen).SprintFunc(),
@@ -26,4 +26,10 @@ var ClorFuncMap = template.FuncMap{
 	"faint":     color.New(color.Faint).SprintFunc(),
 	"italic":    color.New(color.Italic).SprintFunc(),
 	"underline": color.New(color.Underline).SprintFunc(),
+}
+
+/ FontColor sets the color of the given string and bolds the font
+func FontColor(str, c string) string {
+	//return termenv.String(str).Foreground(term.Color(color)).Bold().String()
+	//
 }
