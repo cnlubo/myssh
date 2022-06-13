@@ -49,7 +49,6 @@ func Choices(sliceChoices interface{}) []*Choice {
 		choices := make([]*Choice, 0, slice.Len())
 		for i := 0; i < slice.Len(); i++ {
 			value := slice.Index(i).Interface()
-			//fmt.Println(value)
 			choices = append(choices, NewChoice(value))
 		}
 

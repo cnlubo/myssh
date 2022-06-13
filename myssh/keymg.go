@@ -211,17 +211,17 @@ func createDefaultSSHKey(env *Environment) error {
 			sp.Template = customTemplate
 			sp.ResultTemplate = resultTemplate
 			sp.SelectedChoiceStyle = func(c *selection.Choice) string {
-				a, _ := c.Value.(article)
+				a, _ := c.Value.(KeyType)
 
-				return blue.Bold().Styled(a.Name) + " " + termenv.String("("+a.ID+")").Faint().String()
+				return blue.Bold().Styled(a.Name) + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
 			}
 			sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
-				a, _ := c.Value.(article)
+				a, _ := c.Value.(KeyType)
 
-				return a.Name + " " + termenv.String("("+a.ID+")").Faint().String()
+				return a.Name + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
 			}
 			sp.ExtendedTemplateFuncs = map[string]interface{}{
-				"name": func(c *selection.Choice) string { return c.Value.(article).Name },
+				"name": func(c *selection.Choice) string { return c.Value.(KeyType).Name },
 			}
 
 			choice, err := sp.RunPrompt()
