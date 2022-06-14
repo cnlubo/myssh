@@ -15,7 +15,6 @@ import (
 // Model is a data container used to store TUI status information
 type Model struct {
 	*Selection
-
 	// Err holds errors that may occur during the execution of
 	// the selection prompt.
 	Err error
@@ -115,6 +114,7 @@ func (m *Model) initTemplate() (*template.Template, error) {
 			return m.UnselectedChoiceStyle(c)
 		},
 	})
+	tmpl.Funcs(common.ColorFuncMap)
 
 	return tmpl.Parse(m.Template)
 }

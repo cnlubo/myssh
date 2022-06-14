@@ -8,7 +8,6 @@ import (
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
 	"github.com/fatih/color"
-	"github.com/muesli/termenv"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"
@@ -23,32 +22,6 @@ const (
 	// HookName is the name of a hook that is called when present after using a key
 	HookName       = "hook"
 	DefaultBitSize = 2048
-	customTemplate = `
-{{- if .Prompt -}}
-  {{ Bold .Prompt }}
-{{ end -}}
-{{ if .IsFiltered }}
-  {{- print .FilterPrompt " " .FilterInput }}
-{{ end }}
-
-{{- range  $i, $choice := .Choices }}
-  {{- if IsScrollUpHintPosition $i }}
-    {{- print "⇡ " -}}
-  {{- else if IsScrollDownHintPosition $i -}}
-    {{- print "⇣ " -}} 
-  {{- else -}}
-    {{- print "  " -}}
-  {{- end -}} 
-
-  {{- if eq $.SelectedIndex $i }}
-   {{- print "[" (Foreground "32" (Bold "x")) "] " (Selected $choice) "\n" }}
-  {{- else }}
-    {{- print "[ ] " (Unselected $choice) "\n" }}
-  {{- end }}
-{{- end}}`
-	resultTemplate = `
-		{{- print .Prompt " " (Foreground "32"  (name .FinalChoice)) "\n" -}}
-		`
 )
 
 // SSHKey struct includes both private/public keys & isDefault flag
@@ -191,27 +164,11 @@ func createDefaultSSHKey(env *Environment) error {
 			//sp := selection.New("Select SSH Key Type:",
 			//	selection.Choices([]string{"Horse", "Car", "Plane", "Bike"}))
 
-			type article struct {
-				ID   string
-				Name string
-			}
-
-			//choices := []article{
-			//	{ID: "123", Name: "Article A"},
-			//	{ID: "321", Name: "Article B"},
-			//	{ID: "345", Name: "Article C"},
-			//	{ID: "456", Name: "Article D"},
-			//	{ID: "444", Name: "Article E"},
-			//}
-			//blue := termenv.String().Foreground(termenv.ANSI256Color(32)) // nolint:gomnd
-			//blue := color.New(color.BgHiBlue, color.Bold).PrintfFunc()
 			blue := color.New(color.Bold, color.FgHiBlue).SprintfFunc()
 			sp := selection.New("Select SSH Key Type:",
 				selection.Choices(sshKeyType))
 			sp.PageSize = 5
 			sp.Filter = nil
-			sp.Template = customTemplate
-			sp.ResultTemplate = resultTemplate
 			sp.SelectedChoiceStyle = func(c *selection.Choice) string {
 				a, _ := c.Value.(KeyType)
 
@@ -221,7 +178,8 @@ func createDefaultSSHKey(env *Environment) error {
 			sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
 				a, _ := c.Value.(KeyType)
 
-				return a.Name + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
+				//return a.Name + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
+				return a.Name
 			}
 			sp.ExtendedTemplateFuncs = map[string]interface{}{
 				"name": func(c *selection.Choice) string { return c.Value.(KeyType).Name },
