@@ -2,7 +2,6 @@ package common
 
 import (
 	"github.com/fatih/color"
-	"github.com/muesli/termenv"
 	"text/template"
 )
 
@@ -28,10 +27,13 @@ var ColorFuncMap = template.FuncMap{
 	"italic":    color.New(color.Italic).SprintFunc(),
 	"underline": color.New(color.Underline).SprintFunc(),
 }
-var term = termenv.ColorProfile()
 
-// FontColor sets the color of the given string and bolds the font
-func FontColor(str, color string) string {
-	return termenv.String(str).Foreground(term.Color(color)).Bold().String()
-
+func RenderedText(str, strcolor string) string {
+	switch strcolor {
+	case "blue":
+		return color.New(color.Bold, color.FgHiBlue).SprintfFunc()(str)
+	case "white":
+		return color.New(color.Bold, color.FgHiWhite).SprintFunc()(str)
+	}
+	return str
 }

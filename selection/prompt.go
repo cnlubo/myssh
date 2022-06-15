@@ -43,10 +43,22 @@ func DefaultFinalChoiceStyle(c *Choice) string {
 	return termenv.String(c.String).Foreground(accentColor).String()
 }
 
+// DefaultHeaderFuncWithAppend return the default HeaderFunc and append
+// the given string to the next line of the default header
+func DefaultHeaderFuncWithAppend(append string) func(m Model, obj interface{}, gdIndex int) string {
+	return func(m Model, obj interface{}, gdIndex int) string {
+		//return common.FontColor(DefaultHeader+"\n"+append, ColorHeader)
+		return DefaultHeader + "\n" + append
+	}
+}
+
 // Selection represents a configurable selection prompt.
 type Selection struct {
+	HeadPrompt string
+
 	// HeaderFunc Header rendering function
 	HeaderFunc func(m Model, obj interface{}, gdIndex int) string
+
 	// Choices represent all selectable choices of the selection. Slices of
 	// arbitrary types can be converted to a slice of choices using the helper
 	// selection.Choices.
@@ -179,8 +191,10 @@ type Selection struct {
 
 // New creates a new selection prompt.
 func New(prompt string, choices []*Choice) *Selection {
+
 	return &Selection{
 		Choices:                     choices,
+		HeadPrompt:                  DefaultHeader,
 		Prompt:                      prompt,
 		FilterPrompt:                DefaultFilterPrompt,
 		Template:                    DefaultTemplate,

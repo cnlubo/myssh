@@ -2,10 +2,13 @@ package selection
 
 // DefaultTemplate defines the default appearance of the selection and can
 // be copied as a starting point for a custom template.
-
+//{{ .HeadPrompt | bold | cyan }}
 const DefaultTemplate = `
+{{- if .HeadPrompt -}}
+  {{- print | faint | cyan .HeadPrompt "\n" -}}
+{{ end -}}
 {{- if .Prompt -}}
-  {{ .Prompt | faint | cyan }}
+  {{ .Prompt | bold | cyan }}
 {{ end -}}
 {{ if .IsFiltered }}
   {{- print .FilterPrompt " " .FilterInput }}

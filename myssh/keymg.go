@@ -2,12 +2,12 @@ package myssh
 
 import (
 	"fmt"
+	"github.com/cnlubo/myssh/common"
 	"github.com/cnlubo/myssh/confirmation"
 	"github.com/cnlubo/myssh/prompt"
 	"github.com/cnlubo/myssh/selection"
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
-	"github.com/fatih/color"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"
@@ -164,7 +164,6 @@ func createDefaultSSHKey(env *Environment) error {
 			//sp := selection.New("Select SSH Key Type:",
 			//	selection.Choices([]string{"Horse", "Car", "Plane", "Bike"}))
 
-			blue := color.New(color.Bold, color.FgHiBlue).SprintfFunc()
 			sp := selection.New("Select SSH Key Type:",
 				selection.Choices(sshKeyType))
 			sp.PageSize = 5
@@ -172,14 +171,12 @@ func createDefaultSSHKey(env *Environment) error {
 			sp.SelectedChoiceStyle = func(c *selection.Choice) string {
 				a, _ := c.Value.(KeyType)
 
-				//return blue.Bold().Styled(a.Name) + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
-				return blue(a.Name)
+				return common.RenderedText(a.Name, "blue")
 			}
 			sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
 				a, _ := c.Value.(KeyType)
 
-				//return a.Name + " " + termenv.String("("+a.KeyBaseName+")").Faint().String()
-				return a.Name
+				return common.RenderedText(a.Name, "white")
 			}
 			sp.ExtendedTemplateFuncs = map[string]interface{}{
 				"name": func(c *selection.Choice) string { return c.Value.(KeyType).Name },

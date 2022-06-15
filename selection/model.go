@@ -291,6 +291,7 @@ func (m *Model) View() string {
 	}
 
 	err := m.tmpl.Execute(viewBuffer, map[string]interface{}{
+		"HeadPrompt":    m.HeadPrompt,
 		"Prompt":        m.Prompt,
 		"IsFiltered":    m.Filter != nil,
 		"FilterPrompt":  m.FilterPrompt,
