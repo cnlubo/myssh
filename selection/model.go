@@ -206,6 +206,10 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.scrollDown()
 		case keyMatches(msg, m.KeyMap.ScrollUp):
 			m.scrollUp()
+		case keyMatches(msg, m.KeyMap.Left):
+			m.scrollUp()
+		case keyMatches(msg, m.KeyMap.Right):
+			m.scrollDown()
 		default:
 			return m.updateFilter(msg)
 		}
@@ -291,8 +295,7 @@ func (m *Model) View() string {
 	}
 
 	err := m.tmpl.Execute(viewBuffer, map[string]interface{}{
-		"HeadPrompt":    m.HeadPrompt,
-		"Prompt":        m.Prompt,
+		"Prompt":        defaultHeader + "\n" + m.Prompt,
 		"IsFiltered":    m.Filter != nil,
 		"FilterPrompt":  m.FilterPrompt,
 		"FilterInput":   m.filterInput.View(),

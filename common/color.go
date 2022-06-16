@@ -34,6 +34,8 @@ func RenderedText(str, strcolor string) string {
 		return color.New(color.Bold, color.FgHiBlue).SprintfFunc()(str)
 	case "white":
 		return color.New(color.Bold, color.FgHiWhite).SprintFunc()(str)
+	case "red":
+		return color.New(color.Bold, color.FgHiRed).SprintFunc()(str)
 	}
 	return str
 }

@@ -4,11 +4,8 @@ package selection
 // be copied as a starting point for a custom template.
 //{{ .HeadPrompt | bold | cyan }}
 const DefaultTemplate = `
-{{- if .HeadPrompt -}}
-  {{- print | faint | cyan .HeadPrompt "\n" -}}
-{{ end -}}
 {{- if .Prompt -}}
-  {{ .Prompt | bold | cyan }}
+  {{ .Prompt | bold | yellow }}
 {{ end -}}
 {{ if .IsFiltered }}
   {{- print .FilterPrompt " " .FilterInput }}
@@ -24,11 +21,13 @@ const DefaultTemplate = `
   {{- end -}}
 
   {{- if eq $.SelectedIndex $i }}
-   {{- print (Foreground "32" (Bold "▸ ")) (Selected $choice) "\n" }}
+   {{- print (red (bold "» ")) (Selected $choice) "\n" }}
   {{- else }}
     {{- print "  " (Unselected $choice) "\n" }}
   {{- end }}
 {{- end}}`
+
+// {{- print (red (bold "▸ ")) (Selected $choice) "\n" }}
 
 // DefaultResultTemplate defines the default appearance with which the
 // finale result of the selection is presented.

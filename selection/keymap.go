@@ -17,6 +17,8 @@ func NewDefaultKeyMap() *KeyMap {
 		ClearFilter: []string{"esc"},
 		ScrollDown:  []string{"pgdown"},
 		ScrollUp:    []string{"pgup"},
+		Left:        []string{"left"},
+		Right:       []string{"right"},
 	}
 }
 
@@ -29,6 +31,8 @@ type KeyMap struct {
 	ClearFilter []string
 	ScrollDown  []string
 	ScrollUp    []string
+	Left        []string
+	Right       []string
 }
 
 func keyMatches(key tea.KeyMsg, mapping []string) bool {

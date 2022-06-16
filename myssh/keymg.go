@@ -2,7 +2,6 @@ package myssh
 
 import (
 	"fmt"
-	"github.com/cnlubo/myssh/common"
 	"github.com/cnlubo/myssh/confirmation"
 	"github.com/cnlubo/myssh/prompt"
 	"github.com/cnlubo/myssh/selection"
@@ -168,19 +167,19 @@ func createDefaultSSHKey(env *Environment) error {
 				selection.Choices(sshKeyType))
 			sp.PageSize = 5
 			sp.Filter = nil
-			sp.SelectedChoiceStyle = func(c *selection.Choice) string {
-				a, _ := c.Value.(KeyType)
-
-				return common.RenderedText(a.Name, "blue")
-			}
-			sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
-				a, _ := c.Value.(KeyType)
-
-				return common.RenderedText(a.Name, "white")
-			}
-			sp.ExtendedTemplateFuncs = map[string]interface{}{
-				"name": func(c *selection.Choice) string { return c.Value.(KeyType).Name },
-			}
+			//sp.SelectedChoiceStyle = func(c *selection.Choice) string {
+			//	a, _ := c.Value.(KeyType)
+			//
+			//	return common.RenderedText(a.Name, "blue")
+			//}
+			//sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
+			//	a, _ := c.Value.(KeyType)
+			//
+			//	return common.RenderedText(a.Name, "white")
+			//}
+			//sp.ExtendedTemplateFuncs = map[string]interface{}{
+			//	"name": func(c *selection.Choice) string { return c.Value.(KeyType).Name },
+			//}
 
 			choice, err := sp.RunPrompt()
 			if err != nil {
