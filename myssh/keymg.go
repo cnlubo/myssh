@@ -175,7 +175,7 @@ func createDefaultSSHKey(env *Environment) error {
 			//sp.UnselectedChoiceStyle = func(c *selection.Choice) string {
 			//	a, _ := c.Value.(KeyType)
 			//
-			//	return common.RenderedText(a.Name, "white")
+			//	return common.RenderedText(a.Name, "red")
 			//}
 			//sp.ExtendedTemplateFuncs = map[string]interface{}{
 			//	"name": func(c *selection.Choice) string { return c.Value.(KeyType).Name },

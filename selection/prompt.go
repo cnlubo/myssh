@@ -37,8 +37,11 @@ const (
 // DefaultSelectedChoiceStyle is the default style for selected choices.
 func DefaultSelectedChoiceStyle(c *Choice) string {
 	//return termenv.String(c.String).Foreground(accentColor).Bold().String()
-	//return common.RenderedText(c.String, "red")
-	return c.String
+	return common.RenderedText(c.String, "blue")
+}
+
+func DefaultUnselectedChoiceStyle(c *Choice) string {
+	return common.RenderedText(c.String, "red")
 }
 
 // DefaultFinalChoiceStyle is the default style for final choices.
@@ -191,6 +194,7 @@ func New(prompt string, choices []*Choice) *Selection {
 		Filter:                      FilterContainsCaseInsensitive,
 		FilterInputPlaceholderStyle: lipgloss.NewStyle().Foreground(lipgloss.Color("240")),
 		SelectedChoiceStyle:         DefaultSelectedChoiceStyle,
+		UnselectedChoiceStyle:       DefaultUnselectedChoiceStyle,
 		FinalChoiceStyle:            DefaultFinalChoiceStyle,
 		KeyMap:                      NewDefaultKeyMap(),
 		FilterPlaceholder:           DefaultFilterPlaceholder,
