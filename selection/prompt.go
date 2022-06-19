@@ -15,7 +15,6 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/muesli/termenv"
 )
 
 const (
@@ -28,25 +27,26 @@ const (
 	// entered yet.
 	DefaultFilterPlaceholder = "Type to filter choices"
 
-	accentColor = termenv.ANSI256Color(32)
+	// accentColor = termenv.ANSI256Color(32)
 
 	defaultHeader = "Use the arrow keys to navigate: ↓ ↑ → ←"
-	//DefaultCursor = "»"
 )
 
 // DefaultSelectedChoiceStyle is the default style for selected choices.
 func DefaultSelectedChoiceStyle(c *Choice) string {
-	//return termenv.String(c.String).Foreground(accentColor).Bold().String()
 	return common.RenderedText(c.String, "blue")
+
 }
 
 func DefaultUnselectedChoiceStyle(c *Choice) string {
-	return common.RenderedText(c.String, "red")
+	return common.RenderedText(c.String, "white")
+
 }
 
 // DefaultFinalChoiceStyle is the default style for final choices.
 func DefaultFinalChoiceStyle(c *Choice) string {
-	return termenv.String(c.String).Foreground(accentColor).String()
+	// return termenv.String(c.String).Foreground(accentColor).String()
+	return common.RenderedText(c.String, "green")
 }
 
 // Selection represents a configurable selection prompt.
@@ -177,9 +177,9 @@ type Selection struct {
 	// Input is the input reader, by default, os.Stdin is used.
 	Input io.Reader
 
-	// ColorProfile determines how colors are rendered. By default, the terminal
-	// is queried.
-	ColorProfile termenv.Profile
+	//// ColorProfile determines how colors are rendered. By default, the terminal
+	//// is queried.
+	//ColorProfile termenv.Profile
 }
 
 // New creates a new selection prompt.

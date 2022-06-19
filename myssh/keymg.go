@@ -123,6 +123,18 @@ func createDefaultSSHKey(env *Environment) error {
 			for _, kt := range SupportedKeyTypes {
 				sshKeyType = append(sshKeyType, kt)
 			}
+			type article struct {
+				ID   string
+				Name string
+			}
+
+			choices := []article{
+				{ID: "123", Name: "Article A"},
+				{ID: "321", Name: "Article B"},
+				{ID: "345", Name: "Article C"},
+				{ID: "456", Name: "Article D"},
+				{ID: "444", Name: "Article E"},
+			}
 			//
 			//cfg := &promptx.SelectConfig{
 			//	ActiveTpl:    `»  {{ .Name | cyan }}`,
@@ -164,7 +176,7 @@ func createDefaultSSHKey(env *Environment) error {
 			//	selection.Choices([]string{"Horse", "Car", "Plane", "Bike"}))
 
 			sp := selection.New("Select SSH Key Type:",
-				selection.Choices(sshKeyType))
+				selection.Choices(choices))
 			sp.PageSize = 5
 			sp.Filter = nil
 			//sp.SelectedChoiceStyle = func(c *selection.Choice) string {

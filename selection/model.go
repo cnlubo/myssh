@@ -6,7 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/cnlubo/myssh/common"
-	"github.com/muesli/termenv"
+	"strconv"
 	"strings"
 	"text/template"
 )
@@ -35,8 +35,18 @@ type Model struct {
 	tmpl              *template.Template
 	resultTmpl        *template.Template
 	requestedPageSize int
+	quitting          bool
 
-	quitting bool
+	// pageData data set rendered in real time on the current page
+	pageData []interface{}
+	// index global real time index
+	index int
+	// maxIndex global max index
+	maxIndex int
+	// pageIndex real time index of current page
+	pageIndex int
+	// pageMaxIndex current page max index
+	pageMaxIndex int
 }
 
 // ensure that the Model interface is implemented.
@@ -56,10 +66,6 @@ func (m *Model) Init() tea.Cmd {
 		m.Err = fmt.Errorf("no choices provided")
 
 		return tea.Quit
-	}
-
-	if m.ColorProfile == 0 {
-		m.ColorProfile = termenv.ColorProfile()
 	}
 
 	if m.Template == "" {
@@ -84,12 +90,16 @@ func (m *Model) Init() tea.Cmd {
 
 	m.requestedPageSize = m.PageSize
 
+	m.pageIndex = 0
+	m.pageMaxIndex = m.PageSize - 1
+	m.index = 0
+	m.maxIndex = len(m.Choices) - 1
+
 	return textinput.Blink
 }
 
 func (m *Model) initTemplate() (*template.Template, error) {
 	tmpl := template.New("view")
-	tmpl.Funcs(termenv.TemplateFuncs(m.ColorProfile))
 	tmpl.Funcs(m.ExtendedTemplateFuncs)
 	tmpl.Funcs(common.UtilFuncMap())
 	tmpl.Funcs(template.FuncMap{
@@ -105,6 +115,10 @@ func (m *Model) initTemplate() (*template.Template, error) {
 			}
 
 			return m.SelectedChoiceStyle(c)
+		},
+		"Index": func() string {
+			//return len(strconv.Itoa(m.currentChoices)
+			return strconv.Itoa(1)
 		},
 		"Unselected": func(c *Choice) string {
 			if m.UnselectedChoiceStyle == nil {
@@ -125,7 +139,6 @@ func (m *Model) initResultTemplate() (*template.Template, error) {
 	}
 
 	tmpl := template.New("result")
-	tmpl.Funcs(termenv.TemplateFuncs(m.ColorProfile))
 	tmpl.Funcs(m.ExtendedTemplateFuncs)
 	tmpl.Funcs(common.UtilFuncMap())
 	tmpl.Funcs(template.FuncMap{

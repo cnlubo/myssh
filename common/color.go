@@ -26,6 +26,7 @@ var ColorFuncMap = template.FuncMap{
 	"faint":     color.New(color.Faint).SprintFunc(),
 	"italic":    color.New(color.Italic).SprintFunc(),
 	"underline": color.New(color.Underline).SprintFunc(),
+	"reset":     color.New(color.Reset).SprintFunc(),
 }
 
 func RenderedText(str, strcolor string) string {
@@ -34,8 +35,14 @@ func RenderedText(str, strcolor string) string {
 		return color.New(color.Bold, color.FgHiBlue).SprintfFunc()(str)
 	case "white":
 		return color.New(color.Bold, color.FgHiWhite).SprintFunc()(str)
+	case "fwhite":
+		return color.New(color.Faint, color.FgHiWhite).SprintFunc()(str)
 	case "red":
 		return color.New(color.Bold, color.FgHiRed).SprintFunc()(str)
+	case "cyan":
+		return color.New(color.Bold, color.FgHiCyan).SprintFunc()(str)
+	case "green":
+		return color.New(color.Bold, color.FgHiGreen).SprintFunc()(str)
 	}
 	return str
 }

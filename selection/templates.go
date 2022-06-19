@@ -5,7 +5,7 @@ package selection
 //{{ .HeadPrompt | bold | cyan }}
 const DefaultTemplate = `
 {{- if .Prompt -}}
-  {{ .Prompt | bold | cyan }}
+  {{ .Prompt | faint | cyan  }}
 {{ end -}}
 {{ if .IsFiltered }}
   {{- print .FilterPrompt " " .FilterInput }}
@@ -20,11 +20,12 @@ const DefaultTemplate = `
     {{- "  " -}}
   {{- end -}}
 
-  {{- if eq $.SelectedIndex $i }}
-   {{- print (red (bold "» ")) (Selected $choice) "\n" }}
-  {{- else }}
-    {{- print "  " (Unselected $choice) "\n" }}
-  {{- end }}
+{{- if eq $.SelectedIndex $i }}
+  {{- print | reset (green  "»" " [" Index "] ") (Selected $choice) "\n" }}
+{{- else }}
+   {{- print | reset (faint (white "   " Index  ". ")) (Unselected $choice) "\n" }}
+{{- end }}
+
 {{- end}}`
 
 // DefaultResultTemplate defines the default appearance with which the
