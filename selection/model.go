@@ -38,7 +38,7 @@ type Model struct {
 	quitting          bool
 
 	// pageData data set rendered in real time on the current page
-	pageData []interface{}
+	pageData []*Choice
 	// index global real time index
 	index int
 	// maxIndex global max index
@@ -94,7 +94,12 @@ func (m *Model) Init() tea.Cmd {
 	m.pageMaxIndex = m.PageSize - 1
 	m.index = 0
 	m.maxIndex = len(m.Choices) - 1
-
+	if m.PageSize > len(m.Choices) || m.PageSize < 1 {
+		m.PageSize = len(m.Choices)
+		m.pageData = m.Choices
+	} else {
+		m.pageData = m.Choices[:m.PageSize]
+	}
 	return textinput.Blink
 }
 
@@ -117,8 +122,7 @@ func (m *Model) initTemplate() (*template.Template, error) {
 			return m.SelectedChoiceStyle(c)
 		},
 		"Index": func() string {
-			//return len(strconv.Itoa(m.currentChoices)
-			return strconv.Itoa(1)
+			return strconv.Itoa(m.index)
 		},
 		"Unselected": func(c *Choice) string {
 			if m.UnselectedChoiceStyle == nil {

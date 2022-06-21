@@ -177,7 +177,7 @@ func createDefaultSSHKey(env *Environment) error {
 
 			sp := selection.New("Select SSH Key Type:",
 				selection.Choices(choices))
-			sp.PageSize = 5
+			sp.PageSize = 2
 			sp.Filter = nil
 			//sp.SelectedChoiceStyle = func(c *selection.Choice) string {
 			//	a, _ := c.Value.(KeyType)
