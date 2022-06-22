@@ -30,11 +30,17 @@ const (
 	// accentColor = termenv.ANSI256Color(32)
 
 	defaultHeader = "Use the arrow keys to navigate: ↓ ↑ → ←"
+	DefaultCursor = "»"
 )
 
 // DefaultSelectedChoiceStyle is the default style for selected choices.
-func DefaultSelectedChoiceStyle(c *Choice) string {
-	return common.RenderedText(c.String, "blue")
+//func DefaultSelectedChoiceStyle(c *Choice) string {
+//	return common.RenderedText(c.String, "blue")
+//
+//}
+func DefaultSelectedChoiceStyle(m Model, obj interface{}, gdIndex int) string {
+	//return common.RenderedText(m.Choices.String, "blue")
+	return ""
 
 }
 
@@ -51,7 +57,11 @@ func DefaultFinalChoiceStyle(c *Choice) string {
 
 // Selection represents a configurable selection prompt.
 type Selection struct {
+	//SelectedFunc func(m Model, obj interface{}, gdIndex int) string
+	//// UnSelectedFunc unselected data rendering function
+	//UnSelectedFunc func(m Model, obj interface{}, gdIndex int) string
 
+	//// FooterFunc footer rendering function
 	// Choices represent all selectable choices of the selection. Slices of
 	// arbitrary types can be converted to a slice of choices using the helper
 	// selection.Choices.
@@ -145,7 +155,7 @@ type Selection struct {
 	// nil, no style will be applied and the plain string representation of the
 	// choice will be used. This style will be available as the template
 	// function Selected. Custom templates may or may not use this function.
-	SelectedChoiceStyle func(*Choice) string
+	SelectedChoiceStyle func(m Model, obj interface{}, gdIndex int) string
 
 	// UnselectedChoiceStyle style allows to customize the appearance of the
 	// currently unselected choice. By default it is nil, such that no style
