@@ -40,7 +40,7 @@ const (
 //}
 func DefaultSelectedChoiceStyle(m Model, obj interface{}, gdIndex int) string {
 	//return common.RenderedText(m.Choices.String, "blue")
-	return ""
+	return common.RenderedText(obj.(Choice).String, "red")
 
 }
 
@@ -156,7 +156,7 @@ type Selection struct {
 	// choice will be used. This style will be available as the template
 	// function Selected. Custom templates may or may not use this function.
 	SelectedChoiceStyle func(m Model, obj interface{}, gdIndex int) string
-
+	// SelectedChoiceStyle func(*Choice) string
 	// UnselectedChoiceStyle style allows to customize the appearance of the
 	// currently unselected choice. By default it is nil, such that no style
 	// will be applied and the plain string representation of the choice will be
