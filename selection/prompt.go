@@ -38,14 +38,18 @@ const (
 //	return common.RenderedText(c.String, "blue")
 //
 //}
-func DefaultSelectedChoiceStyle(m Model, obj interface{}, gdIndex int) string {
+func DefaultSelectedChoiceStyle(m *Model, obj *Choice, gdIndex int) string {
 	//return common.RenderedText(m.Choices.String, "blue")
-	return common.RenderedText(obj.(Choice).String, "red")
+	return common.RenderedText(obj.String, "red")
 
 }
 
-func DefaultUnselectedChoiceStyle(c *Choice) string {
-	return common.RenderedText(c.String, "white")
+//func DefaultUnselectedChoiceStyle(c *Choice) string {
+//	return common.RenderedText(c.String, "white")
+//
+//}
+func DefaultUnselectedChoiceStyle(m *Model, obj *Choice, gdIndex int) string {
+	return common.RenderedText(obj.String, "white")
 
 }
 
@@ -66,6 +70,9 @@ type Selection struct {
 	// arbitrary types can be converted to a slice of choices using the helper
 	// selection.Choices.
 	Choices []*Choice
+
+	// Cursor cursor rendering style
+	Cursor string
 
 	// Prompt holds the the prompt text or question that is to be answered by
 	// one of the choices.
@@ -155,15 +162,15 @@ type Selection struct {
 	// nil, no style will be applied and the plain string representation of the
 	// choice will be used. This style will be available as the template
 	// function Selected. Custom templates may or may not use this function.
-	SelectedChoiceStyle func(m Model, obj interface{}, gdIndex int) string
+	SelectedChoiceStyle func(m *Model, obj *Choice, gdIndex int) string
 	// SelectedChoiceStyle func(*Choice) string
 	// UnselectedChoiceStyle style allows to customize the appearance of the
 	// currently unselected choice. By default it is nil, such that no style
 	// will be applied and the plain string representation of the choice will be
 	// used.This style will be available as the template function Unselected.
 	// Custom templates may or may not use this function.
-	UnselectedChoiceStyle func(*Choice) string
-
+	// UnselectedChoiceStyle func(*Choice) string
+	UnselectedChoiceStyle func(m *Model, obj *Choice, gdIndex int) string
 	// FinalChoiceStyle style allows to customize the appearance of the choice
 	// that was ultimately chosen. By default DefaultFinalChoiceStyle is used.
 	// If it is nil, no style will be applied and the plain string
@@ -198,6 +205,7 @@ func New(prompt string, choices []*Choice) *Selection {
 	return &Selection{
 		Choices:                     choices,
 		Prompt:                      prompt,
+		Cursor:                      DefaultCursor,
 		FilterPrompt:                DefaultFilterPrompt,
 		Template:                    DefaultTemplate,
 		ResultTemplate:              DefaultResultTemplate,

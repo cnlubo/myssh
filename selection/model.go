@@ -6,6 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/cnlubo/myssh/common"
+	"github.com/mattn/go-runewidth"
 	"strconv"
 	"strings"
 	"text/template"
@@ -120,17 +121,24 @@ func (m *Model) initTemplate() (*template.Template, error) {
 			}
 
 			//return m.SelectedChoiceStyle(Model{,}c)
-			return m.SelectedChoiceStyle(Model{}, c, 1)
+			return m.SelectedChoiceStyle(m, c, 1)
 		},
 		"Index": func() string {
 			return strconv.Itoa(m.index)
 		},
+		//"Unselected": func(c *Choice) string {
+		//	if m.UnselectedChoiceStyle == nil {
+		//		return c.String
+		//	}
+		//
+		//	return m.UnselectedChoiceStyle(c)
+		//},
 		"Unselected": func(c *Choice) string {
 			if m.UnselectedChoiceStyle == nil {
 				return c.String
 			}
 
-			return m.UnselectedChoiceStyle(c)
+			return m.UnselectedChoiceStyle(m, c, 1)
 		},
 	})
 	tmpl.Funcs(common.ColorFuncMap)
@@ -308,67 +316,67 @@ func (m *Model) View() string {
 	}
 
 	// the cursor only needs to be displayed correctly
-	//cursor := common.RenderedText(DefaultCursor, "red")
-	//common.FontColor(m.Cursor, m.CursorColor)
+	cursor := common.RenderedText(m.Cursor, "red")
+
 	// template functions may be displayed dynamically at the head, tail and data area
 	// of the list, and a dynamic index(globalDynamicIndex) needs to be added
-	//for i, obj := range m.pageData {
-	//	// cursor prefix (selected lines need to be displayed,
-	//	// non-selected lines need not be displayed)
-	//	//var cursorPrefix string
-	//	// the rendering style of each row of data (the rendering color
-	//	// of selected rows and non-selected rows is different)
-	//	//var dataLine string
-	//	// consider three cases when calculating globalDynamicIndex:
-	//	//
-	//	// first page: pageIndex(real time page index)、index(global real time index) keep the two consistent
-	//	//	  1. feat (Introducing new features)
-	//	//	  2. fix (Bug fix)
-	//	//	  3. docs (Writing docs)
-	//	//	  4. style (Improving structure/format of the code)
-	//	//	  5. refactor (Refactoring code)
-	//	//	» [6] test (When adding missing tests)
-	//	//
-	//	// slide down to page: pageIndex fixed to maximum, index increasing with sliding
-	//	//	  2. fix (Bug fix)
-	//	//	  3. docs (Writing docs)
-	//	//	  4. style (Improving structure/format of the code)
-	//	//	  5. refactor (Refactoring code)
-	//	//	  6. test (When adding missing tests)
-	//	//	» [7] chore (Changing CI/CD)
-	//	//
-	//	// swipe up to page: pageIndex fixed to minimum, index decrease with sliding
-	//	//	» [3] docs (Writing docs)
-	//	//	  4. style (Improving structure/format of the code)
-	//	//	  5. refactor (Refactoring code)
-	//	//	  6. test (When adding missing tests)
-	//	//	  7. chore (Changing CI/CD)
-	//	//	  8. perf (Improving performance)
-	//	//
-	//	// in three cases, `m.index - m.pageIndex = n`, `n` is the distance between the global real-time
-	//	// index and the page real-time index. when traversing the page data area, think of the traversal
-	//	// index i as a real-time page index pageIndex, `i + n =` i corresponding global index
-	//	//globalDynamicIndex := i + (m.index - m.pageIndex)
-	//	if i == m.pageIndex {
-	//		// keep a space between the cursor and the selected data style
-	//		cursorPrefix = cursor + " "
-	//		// m: A copy of the current object and pass it to the user-defined rendering function to facilitate
-	//		//    the user to read some state information for rendering
-	//		//
-	//		// obj: The single data currently traversed to the data area; pass it to the user-defined rendering
-	//		//      function to help users know the current data that needs to be rendered
-	//		//
-	//		// globalDynamicIndex: The global data index corresponding to the current traverse data; pass it
-	//		//                     to the user-defined rendering function to help users achieve rendering
-	//		//                     actions such as adding serial numbers
-	//		//dataLine = m.SelectedChoiceStyle(m, obj, globalDynamicIndex) + "\n"
-	//	} else {
-	//		// the cursor is not displayed on the unselected line, and the selected line is aligned with the blank character
-	//		//cursorPrefix = common.GenSpaces(runewidth.StringWidth(m.Cursor) + 1)
-	//		//dataLine = m.UnSelectedFunc(m, obj, globalDynamicIndex) + "\n"
-	//	}
-	//
-	//}
+	for i, obj := range m.pageData {
+		// cursor prefix (selected lines need to be displayed,
+		// non-selected lines need not be displayed)
+		var cursorPrefix string
+		// the rendering style of each row of data (the rendering color
+		// of selected rows and non-selected rows is different)
+		var dataLine string
+		// consider three cases when calculating globalDynamicIndex:
+		//
+		// first page: pageIndex(real time page index)、index(global real time index) keep the two consistent
+		//	  1. feat (Introducing new features)
+		//	  2. fix (Bug fix)
+		//	  3. docs (Writing docs)
+		//	  4. style (Improving structure/format of the code)
+		//	  5. refactor (Refactoring code)
+		//	» [6] test (When adding missing tests)
+		//
+		// slide down to page: pageIndex fixed to maximum, index increasing with sliding
+		//	  2. fix (Bug fix)
+		//	  3. docs (Writing docs)
+		//	  4. style (Improving structure/format of the code)
+		//	  5. refactor (Refactoring code)
+		//	  6. test (When adding missing tests)
+		//	» [7] chore (Changing CI/CD)
+		//
+		// swipe up to page: pageIndex fixed to minimum, index decrease with sliding
+		//	» [3] docs (Writing docs)
+		//	  4. style (Improving structure/format of the code)
+		//	  5. refactor (Refactoring code)
+		//	  6. test (When adding missing tests)
+		//	  7. chore (Changing CI/CD)
+		//	  8. perf (Improving performance)
+		//
+		// in three cases, `m.index - m.pageIndex = n`, `n` is the distance between the global real-time
+		// index and the page real-time index. when traversing the page data area, think of the traversal
+		// index i as a real-time page index pageIndex, `i + n =` i corresponding global index
+		globalDynamicIndex := i + (m.index - m.pageIndex)
+		if i == m.pageIndex {
+			// keep a space between the cursor and the selected data style
+			cursorPrefix = cursor + " "
+			// m: A copy of the current object and pass it to the user-defined rendering function to facilitate
+			//    the user to read some state information for rendering
+			//
+			// obj: The single data currently traversed to the data area; pass it to the user-defined rendering
+			//      function to help users know the current data that needs to be rendered
+			//
+			// globalDynamicIndex: The global data index corresponding to the current traverse data; pass it
+			//                     to the user-defined rendering function to help users achieve rendering
+			//                     actions such as adding serial numbers
+			dataLine = m.SelectedChoiceStyle(m, obj, globalDynamicIndex) + "\n"
+		} else {
+			// the cursor is not displayed on the unselected line, and the selected line is aligned with the blank character
+			cursorPrefix = common.GenSpaces(runewidth.StringWidth(m.Cursor) + 1)
+			dataLine = m.UnselectedChoiceStyle(m, obj, globalDynamicIndex) + "\n"
+		}
+
+	}
 	// avoid panics if Quit is sent during Init
 	if m.tmpl == nil {
 		return ""
