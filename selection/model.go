@@ -126,6 +126,9 @@ func (m *Model) initTemplate() (*template.Template, error) {
 		"Index": func() string {
 			return strconv.Itoa(m.index)
 		},
+		"Data": func() interface{} {
+			return ""
+		},
 		//"Unselected": func(c *Choice) string {
 		//	if m.UnselectedChoiceStyle == nil {
 		//		return c.String
@@ -317,7 +320,7 @@ func (m *Model) View() string {
 
 	// the cursor only needs to be displayed correctly
 	cursor := common.RenderedText(m.Cursor, "red")
-
+	var data string
 	// template functions may be displayed dynamically at the head, tail and data area
 	// of the list, and a dynamic index(globalDynamicIndex) needs to be added
 	for i, obj := range m.pageData {
@@ -375,8 +378,9 @@ func (m *Model) View() string {
 			cursorPrefix = common.GenSpaces(runewidth.StringWidth(m.Cursor) + 1)
 			dataLine = m.UnselectedChoiceStyle(m, obj, globalDynamicIndex) + "\n"
 		}
-
+		data += cursorPrefix + dataLine
 	}
+	//fmt.Println(data)
 	// avoid panics if Quit is sent during Init
 	if m.tmpl == nil {
 		return ""

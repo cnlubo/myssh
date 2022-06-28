@@ -21,9 +21,9 @@ const DefaultTemplate = `
   {{- end -}}
 
 {{- if eq $.SelectedIndex $i }}
-  {{- print | reset (green  "»" " [" Index "] ") (Selected $choice) "\n" }}
+  {{- print | reset (green  "» ") (Selected $choice) "\n" }}
 {{- else }}
-   {{- print | reset (faint (white "   " Index  ". ")) (Unselected $choice) "\n" }}
+   {{- print | reset " " (Unselected $choice) "\n" }}
 {{- end }}
 
 {{- end}}`

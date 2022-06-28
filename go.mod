@@ -15,6 +15,7 @@ require (
 	github.com/gookit/color v1.5.0
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
+	github.com/mattn/go-runewidth v0.0.13
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mritd/readline v0.0.0-20190919142632-e26f42a56c34
 	github.com/muesli/reflow v0.3.0
@@ -28,7 +29,7 @@ require (
 	github.com/stretchr/testify v1.7.1 // indirect
 	golang.org/x/crypto v0.0.0-20220518034528-6f7dac969898
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
-	golang.org/x/term v0.0.0-20220411215600-e5f449aeb171
+	golang.org/x/term v0.0.0-20220411215600-e5f449aeb171 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.0

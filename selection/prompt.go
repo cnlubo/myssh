@@ -8,8 +8,10 @@ package selection
 import (
 	"fmt"
 	"github.com/cnlubo/myssh/common"
+	"github.com/mattn/go-runewidth"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 	"text/template"
 
@@ -39,17 +41,12 @@ const (
 //
 //}
 func DefaultSelectedChoiceStyle(m *Model, obj *Choice, gdIndex int) string {
-	//return common.RenderedText(m.Choices.String, "blue")
-	return common.RenderedText(obj.String, "red")
+	return common.RenderedText("["+strconv.Itoa(gdIndex+1)+"] "+obj.String, "red")
 
 }
 
-//func DefaultUnselectedChoiceStyle(c *Choice) string {
-//	return common.RenderedText(c.String, "white")
-//
-//}
 func DefaultUnselectedChoiceStyle(m *Model, obj *Choice, gdIndex int) string {
-	return common.RenderedText(obj.String, "white")
+	return common.GenSpaces(runewidth.StringWidth(m.Cursor)+1) + common.RenderedText(strconv.Itoa(gdIndex+1)+". "+obj.String, "white")
 
 }
 
