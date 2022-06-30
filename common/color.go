@@ -43,6 +43,8 @@ func RenderedText(str, strcolor string) string {
 		return color.New(color.Bold, color.FgHiCyan).SprintFunc()(str)
 	case "green":
 		return color.New(color.Bold, color.FgHiGreen).SprintFunc()(str)
+	case "yellow":
+		return color.New(color.Bold, color.FgHiYellow).SprintFunc()(str)
 	}
 	return str
 }

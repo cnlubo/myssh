@@ -12,21 +12,39 @@ const DefaultTemplate = `
 {{ end }}
 
 {{- range  $i, $choice := .Choices }}
-  {{- if IsScrollUpHintPosition $i }}
-    {{- "⇡ " -}}
-  {{- else if IsScrollDownHintPosition $i -}}
-    {{- "⇣ " -}}
-  {{- else -}}
-    {{- "  " -}}
-  {{- end -}}
 
 {{- if eq $.SelectedIndex $i }}
-  {{- print | reset (green  "» ") (Selected $choice) "\n" }}
+  {{- print | reset (green  (Cursor) " ") (Selected $choice) "\n" }}
 {{- else }}
-   {{- print | reset " " (Unselected $choice) "\n" }}
+   {{- print | reset " " ( faint (Unselected $choice)) "\n" }}
 {{- end }}
 
 {{- end}}`
+
+//const DefaultTemplate = `
+//{{- if .Prompt -}}
+//  {{ .Prompt | faint | cyan  }}
+//{{ end -}}
+//{{ if .IsFiltered }}
+//  {{- print .FilterPrompt " " .FilterInput }}
+//{{ end }}
+//
+//{{- range  $i, $choice := .Choices }}
+//  {{- if IsScrollUpHintPosition $i }}
+//    {{- "⇡ " -}}
+//  {{- else if IsScrollDownHintPosition $i -}}
+//    {{- "⇣ " -}}
+//  {{- else -}}
+//    {{- "  " -}}
+//  {{- end -}}
+//
+//{{- if eq $.SelectedIndex $i }}
+//  {{- print | reset (green  "» ") (Selected $choice) "\n" }}
+//{{- else }}
+//   {{- print | reset " " (Unselected $choice) "\n" }}
+//{{- end }}
+
+//{{- end}}`
 
 // DefaultResultTemplate defines the default appearance with which the
 // finale result of the selection is presented.

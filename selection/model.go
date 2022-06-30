@@ -7,7 +7,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/cnlubo/myssh/common"
 	"github.com/mattn/go-runewidth"
-	"strconv"
 	"strings"
 	"text/template"
 )
@@ -109,39 +108,29 @@ func (m *Model) initTemplate() (*template.Template, error) {
 	tmpl.Funcs(m.ExtendedTemplateFuncs)
 	tmpl.Funcs(common.UtilFuncMap())
 	tmpl.Funcs(template.FuncMap{
-		"IsScrollDownHintPosition": func(idx int) bool {
-			return m.canScrollDown() && (idx == len(m.currentChoices)-1)
-		},
-		"IsScrollUpHintPosition": func(idx int) bool {
-			return m.canScrollUp() && idx == 0 && m.scrollOffset > 0
-		},
+		//"IsScrollDownHintPosition": func(idx int) bool {
+		//	return m.canScrollDown() && (idx == len(m.currentChoices)-1)
+		//},
+		//"IsScrollUpHintPosition": func(idx int) bool {
+		//	return m.canScrollUp() && idx == 0 && m.scrollOffset > 0
+		//},
 		"Selected": func(c *Choice) string {
 			if m.SelectedChoiceStyle == nil {
 				return c.String
 			}
-
-			//return m.SelectedChoiceStyle(Model{,}c)
 			return m.SelectedChoiceStyle(m, c, 1)
 		},
-		"Index": func() string {
-			return strconv.Itoa(m.index)
-		},
-		"Data": func() interface{} {
-			return ""
-		},
-		//"Unselected": func(c *Choice) string {
-		//	if m.UnselectedChoiceStyle == nil {
-		//		return c.String
-		//	}
-		//
-		//	return m.UnselectedChoiceStyle(c)
-		//},
 		"Unselected": func(c *Choice) string {
 			if m.UnselectedChoiceStyle == nil {
 				return c.String
 			}
-
 			return m.UnselectedChoiceStyle(m, c, 1)
+		},
+		"Cursor": func() string {
+			if m.Cursor == "" {
+				return DefaultCursor
+			}
+			return m.Cursor
 		},
 	})
 	tmpl.Funcs(common.ColorFuncMap)

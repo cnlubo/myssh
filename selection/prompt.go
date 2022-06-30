@@ -35,18 +35,13 @@ const (
 	DefaultCursor = "»"
 )
 
-// DefaultSelectedChoiceStyle is the default style for selected choices.
-//func DefaultSelectedChoiceStyle(c *Choice) string {
-//	return common.RenderedText(c.String, "blue")
-//
-//}
 func DefaultSelectedChoiceStyle(m *Model, obj *Choice, gdIndex int) string {
-	return common.RenderedText("["+strconv.Itoa(gdIndex+1)+"] "+obj.String, "red")
+	return common.RenderedText("["+strconv.Itoa(obj.Index+1)+"] "+obj.String, "green")
 
 }
 
 func DefaultUnselectedChoiceStyle(m *Model, obj *Choice, gdIndex int) string {
-	return common.GenSpaces(runewidth.StringWidth(m.Cursor)+1) + common.RenderedText(strconv.Itoa(gdIndex+1)+". "+obj.String, "white")
+	return common.GenSpaces(runewidth.StringWidth(m.Cursor)+1) + common.RenderedText(strconv.Itoa(obj.Index+1)+". "+obj.String, "blue")
 
 }
 
@@ -58,11 +53,7 @@ func DefaultFinalChoiceStyle(c *Choice) string {
 
 // Selection represents a configurable selection prompt.
 type Selection struct {
-	//SelectedFunc func(m Model, obj interface{}, gdIndex int) string
-	//// UnSelectedFunc unselected data rendering function
-	//UnSelectedFunc func(m Model, obj interface{}, gdIndex int) string
 
-	//// FooterFunc footer rendering function
 	// Choices represent all selectable choices of the selection. Slices of
 	// arbitrary types can be converted to a slice of choices using the helper
 	// selection.Choices.
@@ -174,6 +165,7 @@ type Selection struct {
 	// representation of the choice will be used. This style will be available
 	// as the template function Final. Custom templates may or may not use this
 	// function.
+
 	FinalChoiceStyle func(*Choice) string
 
 	// KeyMap determines with which keys the selection prompt is controlled. By

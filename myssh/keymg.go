@@ -123,19 +123,35 @@ func createDefaultSSHKey(env *Environment) error {
 			for _, kt := range SupportedKeyTypes {
 				sshKeyType = append(sshKeyType, kt)
 			}
-			type article struct {
-				ID   string
-				Name string
+			//type article struct {
+			//	ID   string
+			//	Name string
+			//}
+
+			type TypeMessage struct {
+				Type          string
+				ZHDescription string
+				ENDescription string
 			}
 
-			choices := []article{
-				{ID: "123", Name: "Article A"},
-				{ID: "321", Name: "Article B"},
-				{ID: "345", Name: "Article C"},
-				{ID: "456", Name: "Article D"},
-				{ID: "444", Name: "Article E"},
-			}
+			//choices := []article{
+			//	{ID: "123", Name: "Article A"},
+			//	{ID: "321", Name: "Article B"},
+			//	{ID: "345", Name: "Article C"},
+			//	{ID: "456", Name: "Article D"},
+			//	{ID: "444", Name: "Article E"},
+			//}
 			//
+			choices := []TypeMessage{
+				{Type: "feat", ZHDescription: "新功能", ENDescription: "Introducing new features"},
+				{Type: "fix", ZHDescription: "修复 Bug", ENDescription: "Bug fix"},
+				{Type: "docs", ZHDescription: "添加文档", ENDescription: "Writing docs"},
+				{Type: "style", ZHDescription: "调整格式", ENDescription: "Improving structure/format of the code"},
+				{Type: "refactor", ZHDescription: "重构代码", ENDescription: "Refactoring code"},
+				{Type: "test", ZHDescription: "增加测试", ENDescription: "When adding missing tests"},
+				{Type: "chore", ZHDescription: "CI/CD 变动", ENDescription: "Changing CI/CD"},
+				{Type: "perf", ZHDescription: "性能优化", ENDescription: "Improving performance"},
+			}
 			//cfg := &promptx.SelectConfig{
 			//	ActiveTpl:    `»  {{ .Name | cyan }}`,
 			//	InactiveTpl:  `  {{ .Name | white }}`,
