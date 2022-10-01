@@ -16,7 +16,6 @@ func main() {
 	// disable sort flags
 	base.Cmd().Flags().SortFlags = false
 	base.Cmd().PersistentFlags().SortFlags = false
-
 	// Add all subCommands.
 	cli.AddCommand(base, &KeyCommand{})
 	cli.AddCommand(base, &CfgCommand{})
