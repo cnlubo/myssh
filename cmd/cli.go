@@ -218,7 +218,7 @@ func (c *Cli) initConfigDir() error {
 	return nil
 }
 
-// initialize myssh
+// Initialize initialize myssh
 func (c *Cli) Initialize() error {
 
 	op := &c.Option.Env

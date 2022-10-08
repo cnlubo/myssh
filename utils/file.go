@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// check file is or is not exist
+// PathExist check file is or is not exist
 func PathExist(_path string) bool {
 	_, err := os.Stat(_path)
 	if err != nil && os.IsNotExist(err) {
@@ -17,7 +17,7 @@ func PathExist(_path string) bool {
 	return true
 }
 
-// check directory is or is not empty
+// IsEmpty check directory is or is not empty
 func IsEmpty(path string) (bool, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -32,7 +32,7 @@ func IsEmpty(path string) (bool, error) {
 	return false, err
 }
 
-// return relative file path if filepath is absolute
+// ParseAbsPath return relative file path if filepath is absolute
 func ParseAbsPath(filepath string, homeDir string) string {
 
 	var result string
@@ -49,7 +49,7 @@ func ParseAbsPath(filepath string, homeDir string) string {
 
 }
 
-// return absolute file path if filepath is relative
+// ParseRelPath return absolute file path if filepath is relative
 func ParseRelPath(filepath string, homeDir string) string {
 
 	var result string
@@ -78,7 +78,7 @@ func IsSymLink(filepath string) (error, bool) {
 
 }
 
-// return the original file path if file  is a symbol link
+// ParseOriginalFilePath return the original file path if file  is a symbol link
 func ParseOriginalFilePath(filepath string) string {
 
 	err, link := IsSymLink(filepath)

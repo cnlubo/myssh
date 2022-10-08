@@ -36,9 +36,8 @@ type SSHKey struct {
 func KeyStoreInit(env *Environment) error {
 
 	keyStorePath := env.SKMPath
-
-	// create keystore dir
 	if found := utils.PathExist(keyStorePath); !found {
+		// create keystore dir
 		err := os.Mkdir(keyStorePath, 0755)
 		if err != nil {
 			return errors.Wrap(err, "Create keyStore dir failed")
@@ -46,6 +45,12 @@ func KeyStoreInit(env *Environment) error {
 	} else {
 		if ok, _ := utils.IsEmpty(keyStorePath); !ok {
 			return errors.New(fmt.Sprintf("KeyStore: %s is not empty", keyStorePath))
+		} else {
+			// Remove existing empty key store if exists
+			err := os.Remove(keyStorePath)
+			if err != nil {
+				return errors.Wrap(err, "Failed to remove existing empty key store!")
+			}
 		}
 	}
 
