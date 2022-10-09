@@ -18,7 +18,7 @@ type ListOption struct {
 	IgnoreCase bool
 }
 
-// server config
+// ServerConfig server config
 type ServerConfig struct {
 	Name                string        `yaml:"name"`
 	Address             string        `yaml:"address"`
@@ -35,7 +35,7 @@ type ServerConfig struct {
 	ServerAliveInterval time.Duration `yaml:"server_alive_interval"`
 }
 
-// myssh servers
+// Servers myssh servers
 type Servers []*ServerConfig
 
 func (servers Servers) Len() int {
@@ -88,14 +88,14 @@ func (cfg *ClustersConfig) ConfigPath() string {
 	return cfg.configPath
 }
 
-// myssh context
+// Context myssh context
 type Context struct {
 	Name          string `yaml:"name"`
 	SSHConfig     string `yaml:"sshconfig"`
 	ClusterConfig string `yaml:"clusterCfg"`
 }
 
-// myssh contexts
+// Contexts myssh contexts
 type Contexts []Context
 
 func (cs Contexts) Len() int {
@@ -108,7 +108,7 @@ func (cs Contexts) Swap(i, j int) {
 	cs[i], cs[j] = cs[j], cs[i]
 }
 
-// main config struct
+// MainConfig main config struct
 type MainConfig struct {
 	configPath string
 	Basic      string   `yaml:"basic"`

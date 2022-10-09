@@ -8,7 +8,6 @@ import (
 	"github.com/cnlubo/myssh/utils"
 	"github.com/cnlubo/promptx"
 	"github.com/pkg/errors"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -736,7 +735,7 @@ func SetSSHKey(aliasName string, env *Environment) (map[string]*SSHKey, error) {
 }
 
 func getKeyPayload(keyPath string) string {
-	key, err := ioutil.ReadFile(keyPath)
+	key, err := os.ReadFile(keyPath)
 	if err != nil {
 		fmt.Println("Failed to read ", keyPath)
 		return ""
