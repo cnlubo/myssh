@@ -28,9 +28,8 @@ require (
 	github.com/schwarmco/go-cartesian-product v0.0.0-20180515110546-d5ee747a6dc9
 	github.com/spf13/cobra v1.5.0
 	github.com/stretchr/testify v1.7.1 // indirect
-	golang.org/x/crypto v0.0.0-20220518034528-6f7dac969898
-	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f
-	golang.org/x/term v0.0.0-20220411215600-e5f449aeb171 // indirect
+	golang.org/x/crypto v0.17.0
+	golang.org/x/sys v0.15.0
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.0
